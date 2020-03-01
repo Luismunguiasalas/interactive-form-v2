@@ -7,7 +7,7 @@ const jobOther = document.querySelector('.js-job--other');
 const designSelectElem = document.querySelector('.js-design');
 const colorSelectElem = document.querySelector('.js-color');
 const colorDivContainer = document.querySelector('.js-colorDiv')
-// const message = document.createElement('span');
+const message = document.createElement('span');
 // colorSelectElem.style.display = 'none';
 // console.log(colorSelectElem);
 
@@ -24,7 +24,7 @@ jobSelectElem.addEventListener('change', e => {
 
 // console.log(designSelectElem.value);
 function checkTheme() {
-    const message = document.createElement('span');
+    // const message = document.createElement('span');
     const selectedTheme = designSelectElem.value
     if (selectedTheme === 'Select Theme') {
         colorSelectElem.style.display = 'none';
@@ -33,36 +33,47 @@ function checkTheme() {
         // console.log(message);
         colorDivContainer.append(message);
     } else {
-        // colorSelectElem.remove(message);
-        colorSelectElem.style.display = 'span';
+        colorSelectElem.style.display = 'inline';
 
+        colorDivContainer.removeChild(message);
     }
 }
 
+
+checkTheme();
 // console.log(colorSelectElem[1].getAttribute('value'));
 console.log(colorSelectElem)
 designSelectElem.addEventListener('change', e => {
     checkTheme();
+    // colorDivContainer.removeChild(message);
     // console.log(designSelectElem.value);
     if (designSelectElem.value === "js puns") {
+        // colorDivContainer.removeChild(message);
+        // colorSelectElem.style.display = 'inline';
+
         // for (let index = 0; index < 3; index++) {
         //     colorSelectElem[index].style.display = 'none';
         // }
-        colorSelectElem[3].style.display = 'hidden';
-        colorSelectElem[4].style.display = 'hidden';
-        colorSelectElem[5].style.display = 'hidden';
+        colorSelectElem[0].style.display = 'span';
+        colorSelectElem[1].style.display = 'span';
+        colorSelectElem[2].style.display = 'span';
+        colorSelectElem[3].style.display = 'none';
+        colorSelectElem[4].style.display = 'none';
+        colorSelectElem[5].style.display = 'none';
 
         // cornflowerblue
         // darkslategrey
         // gold
         // designSelectElem.childNodes.v
     } else if (designSelectElem.value === "heart js") {
-        // colorSelectElem[0].style.display = 'none';
-        // colorSelectElem[1].style.display = 'none';
-        // colorSelectElem[2].style.display = 'none';
-        // colorSelectElem[3].style.display = 'span';
-        // colorSelectElem[4].style.display = 'span';
-        // colorSelectElem[5].style.display = 'span';
+        // colorDivContainer.removeChild(message);
+        colorSelectElem.style.display = 'inline';
+        colorSelectElem[0].style.display = 'none';
+        colorSelectElem[1].style.display = 'none';
+        colorSelectElem[2].style.display = 'none';
+        colorSelectElem[3].style.display = 'span';
+        colorSelectElem[4].style.display = 'span';
+        colorSelectElem[5].style.display = 'span';
         // tomato
         // dimgrey
         // steelblue
