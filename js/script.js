@@ -7,6 +7,22 @@ const jobTextInput = document.querySelector('.js-job__input') // selects job tex
 const colorDivContainer = document.querySelector('.js-color-div-container'); // selects color div
 const colorOptionDefault = document.createElement('option'); // creates option element
 
+const activitiesInput = document.querySelectorAll('.activities input')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 jobTextInput.style.display = "none"; // hiddes other job text input element
 
 colorOptionDefault.textContent = "Please Select a T-Shirt Theme"; //add text content to option element
