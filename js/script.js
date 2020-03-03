@@ -1,31 +1,43 @@
 document.querySelector(".js-focus").focus(); //Give focus to the name text field by default
 
 const jobDropdown = document.querySelector('.js-jobs'); // selects job dropdown element
-const designDropdown = document.querySelector('.js-design'); // selects design dropdown element
-const colorDropdown = document.querySelector('.js-color__Select__Elem'); // selects color dropdown element
 const jobTextInput = document.querySelector('.js-job__input') // selects job text input element
 const colorDivContainer = document.querySelector('.js-color-div-container'); // selects color div
+const designDropdown = document.querySelector('.js-design'); // selects design dropdown element
+const colorDropdown = document.querySelector('.js-color__Select__Elem'); // selects color dropdown element
 const activitiesParent = document.querySelector('.activities'); // selects activities fieldset
-const colorOptionDefault = document.createElement('option'); // creates option element
 const activitiesInput = document.querySelectorAll('.activities input'); // get all input[checkbox] elements of parent .activities
+const paymentDropdown = document.querySelector('.js-payment'); // selects payment dropdown
+const creditCardInfo = document.querySelector('.js-credit-card'); // selects creditcard info
+const paypalInfo = document.querySelector('.js-paypal'); // selects paypal info
+const bitcoinInfo = document.querySelector('.js-bitcoin'); // selects bitcoin info
+
+
+
 let attendingActivities = []; // list for activities
 let totalPrice = 0; // total price of activities
 
-jobTextInput.style.display = "none"; // hiddes other job text input element
-
-const elementprice = document.createElement('p'); // create p element for price
-elementprice.textContent = 'Total: $0'; // add content into p element
-activitiesParent.append(elementprice); // append p element into activities parent
+const colorOptionDefault = document.createElement('option'); // creates option element
+jobTextInput.style.display = "none"; // hiddes other job text input element  ***for job***
 
 
-colorOptionDefault.textContent = "Please Select a T-Shirt Theme"; //add text content to option element
-colorOptionDefault.setAttribute('selected', 'selected'); // selects message by default
-colorDropdown.appendChild(colorOptionDefault);  // appends message to color dropdown
-colorDropdown.setAttribute('disabled', 'disabled'); //disables color dropdown
+const elementprice = document.createElement('p'); // create p element for price    ***for checklist***
+elementprice.textContent = 'Total: $0'; // add content into p element              ***for checklist***
+activitiesParent.append(elementprice); // append p element into activities parent  ***for checklist***
+
+
+// colorOptionDefault.textContent = "Please Select a T-Shirt Theme"; //add text content to option element  ***for t-shirt****
+// colorOptionDefault.setAttribute('selected', 'selected'); // selects message by default                  ***for t-shirt****
+// colorDropdown.appendChild(colorOptionDefault);  // appends message to color dropdown                    ***for t-shirt****
+// colorDropdown.setAttribute('disabled', 'disabled'); //disables color dropdown                           ***for t-shirt****
 
 
 
 
+
+
+colorDivContainer.style.display = 'none';
+activitiesParent.style.display = 'none';
 
 
 
@@ -52,6 +64,10 @@ jobDropdown.addEventListener('change', e => {
 
 
 
+
+
+
+
 /** T-shirt info Section
  * loops through all children of design dropdown and sets displays 'inline'
  */
@@ -59,6 +75,17 @@ function displayColorOptions() {
     for (let index = 0; index < 6; index++) {
         colorDropdown[index].style.display = 'inline';
     }
+}
+
+function hideElementsloop(startInd, endIndex) {
+    for (let index = startInd; index < endIndex; index++) {
+        colorDropdown[index].style.display = 'none';
+    }
+}
+
+function removeAndSetAttr(indexRem, indexSet) {
+    colorDropdown[indexRem].removeAttribute('selected'); // removes selected attribute from option element
+    colorDropdown[indexSet].setAttribute('selected', 'selected');
 }
 
 
@@ -76,12 +103,16 @@ function displayColorOptions() {
  *  - hides all option elements from specified index
  */
 designDropdown.addEventListener('change', e => {
-    colorDropdown.removeAttribute('disabled');
-    colorOptionDefault.removeAttribute('selected');
-    colorOptionDefault.style.display = 'none';
+    colorDivContainer.style.display = 'inline';
+    activitiesParent.style.display = 'block';
+    // colorDropdown.removeAttribute('disabled');
+    // colorOptionDefault.removeAttribute('selected');
+    // colorOptionDefault.style.display = 'none';
     if (designDropdown.value === "Select Theme") { // Incase user doesnt chooses to not select a theme, color option disables
-        colorDropdown.setAttribute('disabled', 'disabled'); //disables color dropdown
-        colorOptionDefault.setAttribute('selected', 'selected'); // selects 'please selects T-shirt theme' option
+        colorDivContainer.style.display = 'none';
+        activitiesParent.style.display = 'none';
+        // colorDropdown.setAttribute('disabled', 'disabled'); //disables color dropdown
+        // colorOptionDefault.setAttribute('selected', 'selected'); // selects 'please selects T-shirt theme' option
     } else if (designDropdown.value === "js puns") {
         removeAndSetAttr(3, 0); //sets first child option element attribute to selected
         displayColorOptions(); // display all color options to inline
@@ -92,30 +123,6 @@ designDropdown.addEventListener('change', e => {
         hideElementsloop(0, 3) // hides element at from startInd to endInd
     }
 })
-
-
-function hideElementsloop(startInd, endIndex) {
-    for (let index = startInd; index < endIndex; index++) {
-        colorDropdown[index].style.display = 'none';
-    }
-}
-
-function removeAndSetAttr(indexRem, indexSet) {
-    colorDropdown[indexRem].removeAttribute('selected'); // removes selected attribute from option element
-    colorDropdown[indexSet].setAttribute('selected', 'selected');
-}
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -174,6 +181,129 @@ for (let index = 0; index < activitiesInput.length; index++) {
  *
  *
  */
+/**
+ * 
+ * payment
+ * 
+ */
 
+paymentDropdown.removeChild(paymentDropdown.children[0]);
+
+function createChildren() {
+    const creditCard = paymentDropdown.children[1];
+    const paypal = paymentDropdown.children[2];
+    const bitcoin = paymentDropdown.children[3];
+    return { creditCard, paypal, bitcoin };
+
+}
+
+const { creditCard, paypal, bitcoin } = createChildren();
+
+// console.log(paymentDropdown.children[1]);
+
+// const creditCard = paymentDropdown.children[1];  // selects child credit card from payment drop down  ***for payment***
+// const paypal = paymentDropdown.children[2];      // selects child paypal from payment drop down       ***for payment***
+// const bitcoin = paymentDropdown.children[3];     // selects child bitcoin from payment drop down      ***for payment***
+// creditCard.setAttribute('selected', 'selected');  // selects credit card by default                   ***for payment***
+// console.log(creditCard);
+
+paypalInfo.style.display = 'none';  // hiddes paypal   ***for payment***
+bitcoinInfo.style.display = 'none'; // hiddes other job text input element  ***for payment***
+
+// hides all but selected element
+function displayAndHidePaymentInfo(e) {
+    if (e.target.value === 'paypal') {
+        paypalInfo.style.display = 'block';
+        creditCardInfo.style.display = 'none';
+        bitcoinInfo.style.display = 'none';
+    }
+    else if (e.target.value === 'bitcoin') {
+        bitcoinInfo.style.display = 'block';
+        paypalInfo.style.display = 'none';
+        creditCardInfo.style.display = 'none';
+    }
+    else {
+        creditCardInfo.style.display = 'block';
+        paypalInfo.style.display = 'none';
+        bitcoinInfo.style.display = 'none';
+    }
+}
+// paypalInfo.style.display = 'block';
+// console.log(paymentDropdown.children);
+// console.log(paymentDropdown.childNodes);
+paymentDropdown.addEventListener('change', e => {
+    displayAndHidePaymentInfo(e);
+});
+
+
+/**
+ * payment
+ *
+ *
+ *
+ */
+
+
+
+
+
+
+
+
+
+
+/**
+ *
+ *
+ *form validation
+ *
+ *
+*/
+const namecontainer = document.querySelector('.js-name');
+const nameWarning = document.createElement('p');
+const yourname = document.querySelector(".js-focus");
+const button = document.querySelector('.js-submit');
+
+
+// console.log(namecontainer.children);
+// console.log(namecontainer.children.length);
+nameWarning.textContent = "Must enter name";
+nameWarning.style.textAlign = 'center';
+nameWarning.style.backgroundColor = 'crimson';
+nameWarning.style.color = 'white';
+
+
+let canOrCantSubmit = [];
+
+// yourname.before(nameWarning);
+// console.log(yourname.value);
+
+// if (yourname.value)
+function eventsss() {
+    // console.log();
+    if (yourname.value === "") {
+        console.log('nothing');
+        yourname.before(nameWarning);
+        button.style.display = 'none';
+        // console.log(namecontainer.children.length);
+
+    } else if (yourname.value.length > 0 && namecontainer.children.length > 8) {
+        console.log('remove');
+        namecontainer.removeChild(namecontainer.children[2]);
+        button.style.display = 'block';
+        // yourname.before()
+    } else if (yourname.value.length > 0) {
+        console.log('letters');
+        button.style.display = 'block';
+    }
+}
+// console.log(button);
+yourname.addEventListener('focusout', eventsss, false);
+yourname.addEventListener('keyup', eventsss, false);
+// button.addEventListener('click', e => {
+//     console.log('letters');
+//     yourname.addEventListener('focusout', eventsss(), false);
+// }, false);
+// console.log(yourname.value);
 
 
