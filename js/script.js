@@ -259,51 +259,77 @@ paymentDropdown.addEventListener('change', e => {
  *
  *
 */
-const namecontainer = document.querySelector('.js-name');
-const nameWarning = document.createElement('p');
-const yourname = document.querySelector(".js-focus");
-const button = document.querySelector('.js-submit');
+const namecontainer = document.querySelector('.js-name'); // selects fieldset name ***for Name event***
+const nameWarning = document.createElement('p'); // create element                 ***for Name event***
+const yourname = document.querySelector(".js-focus"); // selects name input        ***for Name event***
+const button = document.querySelector('.js-submit'); // selects submit button      ***for button***
+
+// nameWarning.textContent = "Must enter name"; // adds styling to p element          ***for Name event***
+nameWarning.style.textAlign = 'center'; // adds styling to p element               ***for Name event***
+nameWarning.style.backgroundColor = 'crimson'; // adds styling to p element        ***for Name event***
+nameWarning.style.color = 'white'; // adds styling to p element                    ***for Name event***
+nameWarning.setAttribute('id', 'namealert');
+
+const youremail = document.querySelector('.js-email'); // selects email input      ***for email event***
+const emailWarning = document.createElement('p'); // create element                ***for email event***
+// console.log(youremail);
 
 
-// console.log(namecontainer.children);
-// console.log(namecontainer.children.length);
-nameWarning.textContent = "Must enter name";
-nameWarning.style.textAlign = 'center';
-nameWarning.style.backgroundColor = 'crimson';
-nameWarning.style.color = 'white';
+
+emailWarning.style.textAlign = 'center' // adds styling to p element               ***for email event***
+emailWarning.style.backgroundColor = 'crimson'; // adds styling to p element       ***for email event***
+emailWarning.style.color = 'white'; // adds styling to p element                   ***for email event***
+emailWarning.setAttribute('id', 'emailalert');
+// let canOrCantSubmit = [];
 
 
-let canOrCantSubmit = [];
-
-// yourname.before(nameWarning);
-// console.log(yourname.value);
-
-// if (yourname.value)
-function eventsss() {
-    // console.log();
+function noName() {  //for name
     if (yourname.value === "") {
-        console.log('nothing');
+        nameWarning.textContent = "Must enter name"; // adds styling to p element          ***for Name event***
         yourname.before(nameWarning);
         button.style.display = 'none';
-        // console.log(namecontainer.children.length);
-
-    } else if (yourname.value.length > 0 && namecontainer.children.length > 8) {
-        console.log('remove');
-        namecontainer.removeChild(namecontainer.children[2]);
+    }
+}
+// && namecontainer.children.length > 10
+function removesOrAddsAlertWhileTypingName() {  // for name
+    if (yourname.value.length > 0 && namecontainer.children.length > 8) {
+        nameWarning.remove();
         button.style.display = 'block';
-        // yourname.before()
-    } else if (yourname.value.length > 0) {
-        console.log('letters');
+    }
+    else if (yourname.value.length > 0) {
         button.style.display = 'block';
     }
 }
-// console.log(button);
-yourname.addEventListener('focusout', eventsss, false);
-yourname.addEventListener('keyup', eventsss, false);
-// button.addEventListener('click', e => {
-//     console.log('letters');
-//     yourname.addEventListener('focusout', eventsss(), false);
-// }, false);
-// console.log(yourname.value);
 
 
+function removesOrAddsAlertWhileTypingEmail() { // for email
+    let thestringemail = youremail.value;
+    if (thestringemail.indexOf('@') === -1 || thestringemail.indexOf('.com') === -1) {
+        emailWarning.textContent = "Must enter email";
+        youremail.before(emailWarning);
+        button.style.display = 'none';
+    } else if (thestringemail.indexOf('@') > thestringemail.indexOf('.com') || thestringemail.indexOf('.com') !== thestringemail.length - 4) {
+        emailWarning.textContent = "Must format correctly";
+        youremail.before(emailWarning);
+        button.style.display = 'none';
+    } else if (thestringemail.includes('@') && thestringemail.includes('.com')) {
+        emailWarning.remove();
+        button.style.display = 'block';
+    }
+}
+
+function verifyEmail() {  // for email
+    let thestringemail = youremail.value;
+    if (thestringemail.indexOf('@') === -1 || thestringemail.indexOf('.com') === -1) {
+        emailWarning.textContent = "Must enter email";
+        youremail.before(emailWarning);
+        button.style.display = 'none';
+    }
+}
+
+
+yourname.addEventListener('focusout', noName, false);
+yourname.addEventListener('keyup', removesOrAddsAlertWhileTypingName, false);
+
+youremail.addEventListener('keyup', removesOrAddsAlertWhileTypingEmail, false);
+youremail.addEventListener('focusout', verifyEmail, false);
