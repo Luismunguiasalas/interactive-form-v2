@@ -15,11 +15,18 @@ const bitcoinInfo = document.querySelector('.js-bitcoin'); // selects bitcoin in
 
 
 let attendingActivities = []; // list for activities
+// console.log(attendingActivities.length);
+// console.log(attendingActivities);
 let totalPrice = 0; // total price of activities
 
 const colorOptionDefault = document.createElement('option'); // creates option element
 jobTextInput.style.display = "none"; // hiddes other job text input element  ***for job***
 
+const checklistWarning = document.createElement('p') // create p elemt for warning ***for checklist***
+checklistWarning.textContent = "Must select ATLEAST ONE"; // add text content      ***for checklist***
+checklistWarning.style.textAlign = 'center'; // adds styling to p element          ***for checklist***
+checklistWarning.style.backgroundColor = 'crimson'; // adds styling to p element   ***for checklist***
+checklistWarning.style.color = 'white'; // adds styling to p element               ***for checklist***
 
 const elementprice = document.createElement('p'); // create p element for price    ***for checklist***
 elementprice.textContent = 'Total: $0'; // add content into p element              ***for checklist***
@@ -36,12 +43,18 @@ activitiesParent.append(elementprice); // append p element into activities paren
 
 
 
-colorDivContainer.style.display = 'none';
-activitiesParent.style.display = 'none';
+colorDivContainer.style.display = 'none'; // hides color drop down
+activitiesParent.style.display = 'none'; // hides checklist
 
 
 
 
+
+
+// console.log(activitiesInput[0].setAttribute('selected', 'selected'));
+const allconference = activitiesInput[0];
+// allconference.checked = true; // auto check main conference
+// console.log(allconference);
 
 
 
@@ -58,13 +71,6 @@ jobDropdown.addEventListener('change', e => {
         jobTextInput.style.display = "none";
     }
 });
-
-
-
-
-
-
-
 
 
 
@@ -105,6 +111,7 @@ function removeAndSetAttr(indexRem, indexSet) {
 designDropdown.addEventListener('change', e => {
     colorDivContainer.style.display = 'inline';
     activitiesParent.style.display = 'block';
+    activitiesParent.insertBefore(checklistWarning, activitiesParent.childNodes[0]);
     // colorDropdown.removeAttribute('disabled');
     // colorOptionDefault.removeAttribute('selected');
     // colorOptionDefault.style.display = 'none';
@@ -165,12 +172,37 @@ for (let index = 0; index < activitiesInput.length; index++) {
             addToTotalPrice(valueofreturn);
             attendingActivities.push(valueofreturn[0]); //add option name selected to activities list
             enableDisableMatchedElement(valueofreturn, true);
+            // console.log(attendingActivities);
+            checklistWarning.remove();
+            // console.log(namecontainer.children.length + " children");
+
+            if (namecontainer.children.length > 8) {
+                button.style.display = 'none';
+            } else {
+                button.style.display = 'block';
+            }
+
+
+
+
+
+
+
+
         } else {
             // when deselect checklist element
             let namee = attendingActivities.indexOf(valueofreturn[0]); // searches name of option selected in activities list
             subtractFromTotalPrice(valueofreturn);
             attendingActivities.splice(namee, 1); // removes option name from activities list 
             enableDisableMatchedElement(valueofreturn, false);
+            // console.log(attendingActivities.length);
+            // checklistWarning.remove();
+            if (attendingActivities.length === 0) {
+                activitiesParent.insertBefore(checklistWarning, activitiesParent.childNodes[0]);
+                button.style.display = 'none';
+                // console.log('zerooo')
+
+            }
         }
     });
 };
@@ -263,12 +295,14 @@ const namecontainer = document.querySelector('.js-name'); // selects fieldset na
 const nameWarning = document.createElement('p'); // create element                 ***for Name event***
 const yourname = document.querySelector(".js-focus"); // selects name input        ***for Name event***
 const button = document.querySelector('.js-submit'); // selects submit button      ***for button***
+button.style.display = 'none';
+// console.log(namecontainer.length);
 
 // nameWarning.textContent = "Must enter name"; // adds styling to p element          ***for Name event***
 nameWarning.style.textAlign = 'center'; // adds styling to p element               ***for Name event***
 nameWarning.style.backgroundColor = 'crimson'; // adds styling to p element        ***for Name event***
 nameWarning.style.color = 'white'; // adds styling to p element                    ***for Name event***
-nameWarning.setAttribute('id', 'namealert');
+// nameWarning.setAttribute('id', 'namealert');
 
 const youremail = document.querySelector('.js-email'); // selects email input      ***for email event***
 const emailWarning = document.createElement('p'); // create element                ***for email event***
@@ -279,7 +313,7 @@ const emailWarning = document.createElement('p'); // create element             
 emailWarning.style.textAlign = 'center' // adds styling to p element               ***for email event***
 emailWarning.style.backgroundColor = 'crimson'; // adds styling to p element       ***for email event***
 emailWarning.style.color = 'white'; // adds styling to p element                   ***for email event***
-emailWarning.setAttribute('id', 'emailalert');
+// emailWarning.setAttribute('id', 'emailalert');
 // let canOrCantSubmit = [];
 
 
@@ -292,36 +326,48 @@ function noName() {  //for name
 }
 // && namecontainer.children.length > 10
 function removesOrAddsAlertWhileTypingName() {  // for name
-    if (yourname.value.length > 0 && namecontainer.children.length > 8) {
+    if (yourname.value.length > 0) {
         nameWarning.remove();
-        button.style.display = 'block';
+        // button.style.display = 'block';
+        if (attendingActivities.length === 0) {
+            button.style.display = 'none';
+            // console.log('zerooo')
+        } else {
+            button.style.display = 'block';
+        }
     }
-    else if (yourname.value.length > 0) {
-        button.style.display = 'block';
-    }
+    // else if (yourname.value.length > 0) {
+    //     button.style.display = 'block';
+    // }
 }
 
 
 function removesOrAddsAlertWhileTypingEmail() { // for email
     let thestringemail = youremail.value;
-    if (thestringemail.indexOf('@') === -1 || thestringemail.indexOf('.com') === -1) {
-        emailWarning.textContent = "Must enter email";
-        youremail.before(emailWarning);
-        button.style.display = 'none';
-    } else if (thestringemail.indexOf('@') > thestringemail.indexOf('.com') || thestringemail.indexOf('.com') !== thestringemail.length - 4) {
+    // if (thestringemail.indexOf('@') === -1 || thestringemail.indexOf('.com') === -1) {
+    //     emailWarning.textContent = "Must enter email also Verify that it is formatted correctly";
+    //     youremail.before(emailWarning);
+    //     button.style.display = 'none';
+    // }
+    if (thestringemail.indexOf('@') > thestringemail.indexOf('.com') || thestringemail.indexOf('.com') !== thestringemail.length - 4) {
         emailWarning.textContent = "Must format correctly";
         youremail.before(emailWarning);
         button.style.display = 'none';
     } else if (thestringemail.includes('@') && thestringemail.includes('.com')) {
         emailWarning.remove();
-        button.style.display = 'block';
+        if (attendingActivities.length === 0) {
+            button.style.display = 'none';
+            // console.log('zerooo')
+        } else {
+            button.style.display = 'block';
+        }
     }
 }
 
 function verifyEmail() {  // for email
     let thestringemail = youremail.value;
     if (thestringemail.indexOf('@') === -1 || thestringemail.indexOf('.com') === -1) {
-        emailWarning.textContent = "Must enter email";
+        emailWarning.textContent = "Must enter email also Verify that it is formatted correctly";
         youremail.before(emailWarning);
         button.style.display = 'none';
     }
@@ -333,3 +379,91 @@ yourname.addEventListener('keyup', removesOrAddsAlertWhileTypingName, false);
 
 youremail.addEventListener('keyup', removesOrAddsAlertWhileTypingEmail, false);
 youremail.addEventListener('focusout', verifyEmail, false);
+
+
+
+
+
+/**
+ * 
+ * 
+ * if the selected payment option is "Credit Card," 
+ * make sure the user has supplied a Credit Card number, a Zip Code, and a 3 number CVV value before the form can be submitted.
+ * Credit Card field should only accept a number between 13 and 16 digits.
+ *  The Zip Code field should accept a 5-digit number.
+ * The CVV should only accept a number that is exactly 3 digits long.
+ */
+
+
+const cvvinput = document.querySelector('#cvv');
+const creditinput = document.querySelector('#cc-num');
+const zipinput = document.querySelector('#zip');
+
+cvvinput.addEventListener('keyup', e => {
+    let cvvinputvalue = cvvinput.value;
+    console.log(cvvinputvalue.length);
+    if (isNaN(cvvinputvalue[0]) || isNaN(cvvinputvalue[1]) || isNaN(cvvinputvalue[2])) {
+        cvvinput.style.border = 'solid 2px red';
+        button.style.display = 'none';
+    }
+    else if (cvvinputvalue.length !== 3) {
+        cvvinput.style.border = 'solid 2px red';
+        button.style.display = 'none';
+    } else {
+        cvvinput.style.border = 'none';
+        if (attendingActivities.length === 0) {
+            button.style.display = 'none';
+        }
+        else if (namecontainer.children.length > 8) {
+            button.style.display = 'none';
+        } else {
+            button.style.display = 'block';
+        }
+
+    }
+    // if (parseInt(cvvinput.value)) {
+    //     console.log('nooo')
+    // }
+    // console.log(parseInt(cvvinput.value));
+})
+// console.log(cvvinput);
+id = "cvv"
+id = "exp-month"
+id = "exp-year"
+
+
+zipinput.addEventListener('keyup', e => {
+    let zipinputvalue = zipinput.value;
+    console.log(zipinputvalue.length);
+    for (let index = 0; index < zipinputvalue.length; index++) {
+        if (isNaN(zipinputvalue[index])) {
+            zipinput.style.border = 'solid 2px red';
+            button.style.display = 'none';
+        }
+        else if (zipinputvalue.length > 5) {
+            zipinput.style.border = 'solid 2px red';
+            button.style.display = 'none';
+        } else {
+            zipinput.style.border = 'none';
+            if (attendingActivities.length === 0) {
+                button.style.display = 'none';
+            }
+            else if (namecontainer.children.length > 8) {
+                button.style.display = 'none';
+            } else {
+                button.style.display = 'block';
+            }
+        }
+
+    }
+});
+
+
+creditinput.addEventListener('keyup', e => {
+    let creditinputvalue = creditinput.value;
+    if (creditinputvalue.length < 10) {
+        creditinput.style.border = 'solid 2px red';
+        button.style.display = 'none';
+
+    }
+})
