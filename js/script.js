@@ -43,6 +43,14 @@ activitiesParent.append(elementprice); // append p element into activities paren
 
 
 
+const cvvinput = document.querySelector('#cvv');
+const creditinput = document.querySelector('#cc-num');
+const zipinput = document.querySelector('#zip');
+
+
+
+
+
 colorDivContainer.style.display = 'none'; // hides color drop down
 activitiesParent.style.display = 'none'; // hides checklist
 
@@ -178,14 +186,19 @@ for (let index = 0; index < activitiesInput.length; index++) {
 
             if (namecontainer.children.length > 8) {
                 button.style.display = 'none';
+                console.log('name 1')
+            }
+            else if (attendingActivities.length === 0) {
+                button.style.display = 'none';
+                console.log('name 2')
+                // console.log('zerooo')
+            } else if (creditinput.value === '' || cvvinput.value === '' || zipinput.value === '') {
+                button.style.display = 'none';
+                console.log('name 3')
             } else {
                 button.style.display = 'block';
+                console.log('name 4')
             }
-
-
-
-
-
 
 
 
@@ -248,16 +261,19 @@ function displayAndHidePaymentInfo(e) {
         paypalInfo.style.display = 'block';
         creditCardInfo.style.display = 'none';
         bitcoinInfo.style.display = 'none';
+        button.style.display = 'block';
     }
     else if (e.target.value === 'bitcoin') {
         bitcoinInfo.style.display = 'block';
         paypalInfo.style.display = 'none';
         creditCardInfo.style.display = 'none';
+        button.style.display = 'block';
     }
     else {
         creditCardInfo.style.display = 'block';
         paypalInfo.style.display = 'none';
         bitcoinInfo.style.display = 'none';
+        button.style.display = 'none';
     }
 }
 // paypalInfo.style.display = 'block';
@@ -316,6 +332,15 @@ emailWarning.style.color = 'white'; // adds styling to p element                
 // emailWarning.setAttribute('id', 'emailalert');
 // let canOrCantSubmit = [];
 
+const creditWarning = document.createElement('p'); // create element                ***for credit event***
+// console.log(youremail);
+
+
+creditWarning.style.textAlign = 'center' // adds styling to p element               ***for credit event***
+creditWarning.style.backgroundColor = 'crimson'; // adds styling to p element       ***for credit event***
+creditWarning.style.color = 'white'; // adds styling to p element                   ***for credit event***
+
+
 
 function noName() {  //for name
     if (yourname.value === "") {
@@ -326,14 +351,30 @@ function noName() {  //for name
 }
 // && namecontainer.children.length > 10
 function removesOrAddsAlertWhileTypingName() {  // for name
-    if (yourname.value.length > 0) {
+    if (yourname.value === "") {
+        nameWarning.textContent = "Must enter name"; // adds styling to p element          ***for Name event***
+        yourname.before(nameWarning);
+        yourname.style.border = 'none';
+        button.style.display = 'none';
+    }
+    else if (yourname.value.length > 0) {
         nameWarning.remove();
+        yourname.style.border = '3px solid lightgreen';
         // button.style.display = 'block';
-        if (attendingActivities.length === 0) {
+        if (namecontainer.children.length > 8) {
             button.style.display = 'none';
+            console.log('name 1')
+        }
+        else if (attendingActivities.length === 0) {
+            button.style.display = 'none';
+            console.log('name 2')
             // console.log('zerooo')
+        } else if (creditinput.value === '' || cvvinput.value === '' || zipinput.value === '') {
+            button.style.display = 'none';
+            console.log('name 3')
         } else {
             button.style.display = 'block';
+            console.log('name 4')
         }
     }
     // else if (yourname.value.length > 0) {
@@ -351,14 +392,28 @@ function removesOrAddsAlertWhileTypingEmail() { // for email
     // }
     if (thestringemail.indexOf('@') > thestringemail.indexOf('.com') || thestringemail.indexOf('.com') !== thestringemail.length - 4) {
         emailWarning.textContent = "Must format correctly";
+        youremail.style.border = 'none';
         youremail.before(emailWarning);
         button.style.display = 'none';
     } else if (thestringemail.includes('@') && thestringemail.includes('.com')) {
         emailWarning.remove();
-        if (attendingActivities.length === 0) {
+        youremail.style.border = '3px solid lightgreen';
+        if (namecontainer.children.length > 8) {
             button.style.display = 'none';
+            console.log('email 1')
+        } else if (attendingActivities.length === 0) {
+            button.style.display = 'none';
+            console.log('email 2')
             // console.log('zerooo')
+        }
+
+        else if (creditinput.value === '' || cvvinput.value === '' || zipinput.value === '') {
+            button.style.display = 'none';
+            console.log('email 3')
         } else {
+            // console.log('thissss');
+            console.log('email 4')
+            // youremail.style.border = '3px solid lightgreen';
             button.style.display = 'block';
         }
     }
@@ -375,6 +430,7 @@ function verifyEmail() {  // for email
 
 
 yourname.addEventListener('focusout', noName, false);
+
 yourname.addEventListener('keyup', removesOrAddsAlertWhileTypingName, false);
 
 youremail.addEventListener('keyup', removesOrAddsAlertWhileTypingEmail, false);
@@ -395,42 +451,48 @@ youremail.addEventListener('focusout', verifyEmail, false);
  */
 
 
-const cvvinput = document.querySelector('#cvv');
-const creditinput = document.querySelector('#cc-num');
-const zipinput = document.querySelector('#zip');
+// const cvvinput = document.querySelector('#cvv');
+// const creditinput = document.querySelector('#cc-num');
+// const zipinput = document.querySelector('#zip');
 
 cvvinput.addEventListener('keyup', e => {
     let cvvinputvalue = cvvinput.value;
     console.log(cvvinputvalue.length);
-    if (isNaN(cvvinputvalue[0]) || isNaN(cvvinputvalue[1]) || isNaN(cvvinputvalue[2])) {
-        cvvinput.style.border = 'solid 2px red';
-        button.style.display = 'none';
-    }
-    else if (cvvinputvalue.length !== 3) {
-        cvvinput.style.border = 'solid 2px red';
-        button.style.display = 'none';
-    } else {
-        cvvinput.style.border = 'none';
-        if (attendingActivities.length === 0) {
+    for (let index = 0; index < cvvinputvalue.length; index++) {
+        if (isNaN(cvvinputvalue[index])) {
+            cvvinput.style.border = 'solid 2px red';
             button.style.display = 'none';
         }
-        else if (namecontainer.children.length > 8) {
+        else if (cvvinputvalue.length > 3) {
+            cvvinput.style.border = 'solid 2px red';
             button.style.display = 'none';
-        } else {
-            button.style.display = 'block';
         }
+        else if (cvvinputvalue.length === 3) {
+            cvvinput.style.border = '3px solid lightgreen';
+            console.log('4')
+            // button.style.display = 'block';
+            if (attendingActivities.length === 0) {
+                button.style.display = 'none';
+                console.log('cvv1')
+            }
+            else if (namecontainer.children.length > 8) {
+                button.style.display = 'none';
+                console.log('cvv2')
+            }
+            else if (creditinput.value === '' || zipinput.value === '') {
+                button.style.display = 'none';
+                console.log('cvv3')
+            }
+            else {
+                console.log('cvv4')
+                button.style.display = 'block';
+            }
 
+        }
     }
-    // if (parseInt(cvvinput.value)) {
-    //     console.log('nooo')
-    // }
-    // console.log(parseInt(cvvinput.value));
 })
-// console.log(cvvinput);
-id = "cvv"
-id = "exp-month"
-id = "exp-year"
 
+// 
 
 zipinput.addEventListener('keyup', e => {
     let zipinputvalue = zipinput.value;
@@ -440,30 +502,105 @@ zipinput.addEventListener('keyup', e => {
             zipinput.style.border = 'solid 2px red';
             button.style.display = 'none';
         }
-        else if (zipinputvalue.length > 5) {
+        else if (zipinputvalue.length > 5 || zipinputvalue.length < 5) {
             zipinput.style.border = 'solid 2px red';
             button.style.display = 'none';
-        } else {
-            zipinput.style.border = 'none';
+        } else if (zipinputvalue.length === 5) {
+            zipinput.style.border = '3px solid lightgreen';
             if (attendingActivities.length === 0) {
                 button.style.display = 'none';
+                console.log('zip 1');
             }
             else if (namecontainer.children.length > 8) {
                 button.style.display = 'none';
-            } else {
+                console.log('zip 2')
+            }
+            else if (creditinput.value === '' || cvvinput.value === '') {
+                button.style.display = 'none';
+                console.log('zip 3')
+            }
+            else {
                 button.style.display = 'block';
+                console.log('zip 4')
             }
         }
 
     }
 });
-
+// const creditcardparent = document.querySelector('#credit-card');
 
 creditinput.addEventListener('keyup', e => {
     let creditinputvalue = creditinput.value;
-    if (creditinputvalue.length < 10) {
-        creditinput.style.border = 'solid 2px red';
-        button.style.display = 'none';
 
+    if (creditinputvalue.length < 13) {
+        // const creditcardparent = document.querySelector('#credit-card');
+        creditWarning.textContent = "Please enter a number that is between 13 and 16 digits long."; // adds styling to p element          ***for Name event***
+        creditinput.before(creditWarning);
+        creditinput.style.border = '2px solid red';
+
+        // console.log('must be within 13 - 16 digits');
+        button.style.display = 'none';
+    } else if (creditinputvalue.length > 16) {
+        creditWarning.textContent = "must be within 13 - 16 digits"; // adds styling to p element          ***for Name event***
+        creditinput.before(creditWarning);
+        creditinput.style.border = '2px solid red';
+
+        // console.log('must be within 13 - 16 digits');
+        button.style.display = 'none';
     }
-})
+    else {
+        creditinput.style.border = '3px solid lightgreen';
+        creditWarning.remove();
+        if (attendingActivities.length === 0) {
+            button.style.display = 'none';
+            console.log('credit 1')
+        }
+        else if (namecontainer.children.length > 8) {
+            button.style.display = 'none';
+            console.log('credit 2')
+        }
+        else if (cvvinput.value === '' || zipinput.value === '') {
+            button.style.display = 'none';
+            console.log('credit 3')
+        }
+        else {
+            button.style.display = 'block';
+            console.log('credit 4')
+        }
+    }
+});
+
+
+function nocreditCard() {  //for name
+    // if (creditinput.value === "") {
+    //     // const creditcardparent = document.querySelector('#credit-card');
+    //     creditWarning.textContent = "please enter creditcard number"; // adds styling to p element          ***for Name event***
+    //     // creditinput.before(nameWarning);
+    //     // creditinput.textContent = "please enter creditcard number"; // adds styling to p element          ***for Name event***
+    //     creditinput.before(creditWarning);
+    //     button.style.display = 'none';
+    let creditinputvalue = creditinput.value;
+    // }
+    if (creditinput.value === "") {
+        // const creditcardparent = document.querySelector('#credit-card');
+        creditWarning.textContent = "please enter creditcard number"; // adds styling to p element          ***for Name event***
+        // creditinput.before(nameWarning);
+        // creditinput.textContent = "please enter creditcard number"; // adds styling to p element          ***for Name event***
+        creditinput.before(creditWarning);
+        button.style.display = 'none';
+    }
+
+
+    for (let index = 0; index < creditinputvalue.length; index++) {
+        if (isNaN(creditinputvalue[index])) {
+            creditinput.style.border = 'solid 2px red';
+            button.style.display = 'none';
+            creditWarning.textContent = "must be digits"; // adds styling to p element          ***for Name event***
+            creditinput.before(creditWarning);
+        }
+    }
+}
+
+creditinput.addEventListener('keyup', nocreditCard, false);
+creditinput.addEventListener('focusout', nocreditCard, false);
+creditinput.addEventListener('keyup', nocreditCard, false);
