@@ -1,22 +1,20 @@
 document.querySelector(".js-focus").focus(); //Give focus to the name text field by default
 
-const jobDropdown = document.querySelector('.js-jobs'); // selects job dropdown element
-const jobTextInput = document.querySelector('.js-job__input') // selects job text input element
-const colorDivContainer = document.querySelector('.js-color-div-container'); // selects color div
-const designDropdown = document.querySelector('.js-design'); // selects design dropdown element
-const colorDropdown = document.querySelector('.js-color__Select__Elem'); // selects color dropdown element
-const activitiesParent = document.querySelector('.activities'); // selects activities fieldset
-const activitiesInput = document.querySelectorAll('.activities input'); // get all input[checkbox] elements of parent .activities
-const paymentDropdown = document.querySelector('.js-payment'); // selects payment dropdown
-const creditCardInfo = document.querySelector('.js-credit-card'); // selects creditcard info
-const paypalInfo = document.querySelector('.js-paypal'); // selects paypal info
-const bitcoinInfo = document.querySelector('.js-bitcoin'); // selects bitcoin info
+const jobDropdown = document.querySelector('.js-Jobs-Dropdown'); // selects job dropdown 'select' element
+const jobTextInput = document.querySelector('.js-Jobs__Other__Input') // selects job text input element
+const colorDivContainer = document.querySelector('.js-Color-Div-Container'); // selects color div container
+const colorDropdown = document.querySelector('.js-Color__Select__Elem'); // selects color dropdown element
+const designDropdown = document.querySelector('.js-Design'); // selects design dropdown 'select' element
+const activitiesParent = document.querySelector('.js-Activities'); // selects Activities 'fieldset' Element
+const activitiesInputChildren = document.querySelectorAll('.js-Activities input'); // get all input[checkbox] elements of parent Activities
+const paymentDropdown = document.querySelector('.js-Payment'); // selects payment dropdown
+const creditCardInfo = document.querySelector('.js-Credit-Card'); // selects creditcard info
+const paypalInfo = document.querySelector('.js-Paypal'); // selects paypal info
+const bitcoinInfo = document.querySelector('.js-Bitcoin'); // selects bitcoin info
 
 
 
 let attendingActivities = []; // list for activities
-// console.log(attendingActivities.length);
-// console.log(attendingActivities);
 let totalPrice = 0; // total price of activities
 
 const colorOptionDefault = document.createElement('option'); // creates option element
@@ -59,8 +57,8 @@ activitiesParent.style.display = 'none'; // hides checklist
 
 
 
-// console.log(activitiesInput[0].setAttribute('selected', 'selected'));
-const allconference = activitiesInput[0];
+// console.log(activitiesInputChildren[0].setAttribute('selected', 'selected'));
+const allconference = activitiesInputChildren[0];
 // allconference.checked = true; // auto check main conference
 // console.log(allconference);
 
@@ -93,6 +91,7 @@ function displayColorOptions() {
 
 function hideElementsloop(startInd, endIndex) {
     for (let index = startInd; index < endIndex; index++) {
+        console.log(colorDropdown[index]);
         colorDropdown[index].style.display = 'none';
     }
 }
@@ -129,13 +128,18 @@ designDropdown.addEventListener('change', e => {
         // colorDropdown.setAttribute('disabled', 'disabled'); //disables color dropdown
         // colorOptionDefault.setAttribute('selected', 'selected'); // selects 'please selects T-shirt theme' option
     } else if (designDropdown.value === "js puns") {
-        removeAndSetAttr(3, 0); //sets first child option element attribute to selected
-        displayColorOptions(); // display all color options to inline
-        hideElementsloop(3, 6);// hides element at from startInd to endInd
+        console.log('js puns');
+        colorDropdown.childNodes[3].style.display = 'none';
+        colorDropdown.childNodes[4].style.display = 'none';
+        colorDropdown.childNodes[5].style.display = 'none';
+        // removeAndSetAttr(3, 0); //sets first child option element attribute to selected
+        // displayColorOptions(); // display all color options to inline
+        // hideElementsloop(0, 3);// hides element at from startInd to endInd
     } else if (designDropdown.value === "heart js") {
-        removeAndSetAttr(0, 3);  //sets third child option element attribute to selected
-        displayColorOptions(); // display all color options to inline
-        hideElementsloop(0, 3) // hides element at from startInd to endInd
+        console.log('heart js');
+        // removeAndSetAttr(0, 3);  //sets third child option element attribute to selected
+        // displayColorOptions(); // display all color options to inline
+        // hideElementsloop(3, 6) // hides element at from startInd to endInd
     }
 })
 
@@ -147,18 +151,18 @@ designDropdown.addEventListener('change', e => {
  * 
  */
 function enableDisableMatchedElement(valueofreturn, dis_en) {
-    for (let indx = 0; indx < activitiesInput.length; indx++) { // for loop
+    for (let indx = 0; indx < activitiesInputChildren.length; indx++) { // for loop
         let newvalueofreturn = getAttributeValues(indx); // get All attribute values from options checklist
         if (valueofreturn[1] === newvalueofreturn[1] && valueofreturn[0] !== newvalueofreturn[0]) { // if option selected time matches with any time in checklist && option selected name doesnt match with any name in checklist 
-            activitiesInput[indx].disabled = dis_en; // enables or disables element that doesnt match name but matches time
+            activitiesInputChildren[indx].disabled = dis_en; // enables or disables element that doesnt match name but matches time
         }
     }
 }
 
 function getAttributeValues(index) {
-    let eventName = activitiesInput[index].getAttribute('name');
-    let eventTime = activitiesInput[index].getAttribute('data-day-and-time');
-    let eventCost = activitiesInput[index].getAttribute('data-cost');
+    let eventName = activitiesInputChildren[index].getAttribute('name');
+    let eventTime = activitiesInputChildren[index].getAttribute('data-day-and-time');
+    let eventCost = activitiesInputChildren[index].getAttribute('data-cost');
     return [eventName, eventTime, eventCost];
 }
 
@@ -172,8 +176,8 @@ function addToTotalPrice(valueofreturn) {
     elementprice.textContent = `Total: $${totalPrice}`;
 }
 
-for (let index = 0; index < activitiesInput.length; index++) {
-    activitiesInput[index].addEventListener('change', e => {
+for (let index = 0; index < activitiesInputChildren.length; index++) {
+    activitiesInputChildren[index].addEventListener('change', e => {
         let valueofreturn = getAttributeValues(index); // Only get attribute values for option selected
         // when select checklist element
         if (attendingActivities.indexOf(valueofreturn[0]) === -1) { //if name of attribute was NOT in activities list run nested code
