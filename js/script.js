@@ -1,5 +1,4 @@
 document.querySelector(".js-focus").focus(); //Give focus to the name text field by default
-
 const jobDropdown = document.querySelector('.js-Jobs-Dropdown'); // selects job dropdown 'select' element
 const jobTextInput = document.querySelector('.js-Jobs__Other__Input') // selects job text input element
 const colorDivContainer = document.querySelector('.js-Color-Div-Container'); // selects color div container
@@ -14,46 +13,42 @@ const creditCardNumber = document.querySelector('#cc-num'); //selects credit car
 const zipCode = document.querySelector('#zip'); // selects zipcode input
 const paypalForm = document.querySelector('.js-Paypal'); // selects paypal form
 const bitcoinForm = document.querySelector('.js-Bitcoin'); // selects bitcoin form
-const namecontainer = document.querySelector('.js-name'); // selects fieldset name ***for Name event***
-const yourname = document.querySelector(".js-focus"); // selects name input        ***for Name event***
-const youremail = document.querySelector('.js-email'); // selects email input      ***for email event***
-const button = document.querySelector('.js-submit'); // selects submit button      ***for button***
-
+const namecontainer = document.querySelector('.js-name'); // selects fieldset name 
+const yourname = document.querySelector(".js-focus"); // selects name input        
+const youremail = document.querySelector('.js-email'); // selects email input      
+const button = document.querySelector('.js-submit'); // selects submit button      
 // create 'p' elements 
-const nameValMesg = document.createElement('p'); // create element                 ***for Name event***
-const emailValMesg = document.createElement('p'); // create element                ***for email event***
-const creditValMesg = document.createElement('p'); // create element                ***for credit event***
+const nameValMesg = document.createElement('p'); // create element                         ***for Name event***
+const emailValMesg = document.createElement('p'); // create element                        ***for email event***
+const creditValMesg = document.createElement('p'); // create element                       ***for credit event***
 const activitiesValMesg = document.createElement('p') // create p elemt for warning        ***for checklist***
-const totalPriceElement = document.createElement('p'); // create p element for price                 ***for checklist***
-
+const totalPriceElement = document.createElement('p'); // create p element for price       ***for checklist***
 // function to change display
 const changeElemDisplay = (Element, displayValue) => Element.style.display = displayValue; // hides element given as a arguement
+// function for styling validation elements
 function validationStyling(element) {
-    element.style.textAlign = 'center'; // adds styling to element               ***for Name event***
-    element.style.border = 'solid 2px red'; // adds styling to element
+    element.style.textAlign = 'center';
+    element.style.border = 'solid 2px red';
 }
-
 // styling for validation messages
 validationStyling(nameValMesg);
 validationStyling(emailValMesg);
 validationStyling(creditValMesg);
 validationStyling(activitiesValMesg);
-
 // elements to hide initially
 changeElemDisplay(jobTextInput, 'none'); // hides other job text input element           ***for other job input***
 changeElemDisplay(colorDivContainer, 'none'); // hides color drop down                   ***for color t-shirt***
 changeElemDisplay(activitiesParentContainer, 'none'); // hides activities checklist      ***for checklist***
-changeElemDisplay(button, 'none');          //                                           ***for button***
-
-
+changeElemDisplay(button, 'none');          // hides button                              ***for submit button***
+changeElemDisplay(paypalForm, 'none');      // hides paypal info                         ***for paypal info***
+changeElemDisplay(bitcoinForm, 'none');     // hides bitcoin info                        ***for bitcoin info***
+// other assignments
 let totalPrice = 0; // total price of activities                                          ***for checklist***
-let registeredActivities = []; // keeps track of activities for 'register for activities' ***for checklist***
+let registeredActivities = []; // keeps track of activities for 'register for activities section'    ***for checklist***
 totalPriceElement.textContent = 'Total: $0'; // add content into p element                           ***for checklist***
 activitiesParentContainer.append(totalPriceElement); // append p element into activities parent      ***for checklist***
 activitiesValMesg.textContent = "Must select atleast One"; // add text content             ***for checklist***
-
-
-
+paymentDropdown.removeChild(paymentDropdown.children[0]); //for payment dropdown           ***for payment***
 /** 
  * JOB ROLE SECTION
  * listens for a change in state on job dropdown
@@ -67,13 +62,9 @@ jobDropdown.addEventListener('change', e => {
         changeElemDisplay(jobTextInput, 'none');
     }
 });
-
-
-
 /***
  * HELPER FUNCTIONS FOR T-SHIRT INFO SECTION
  ***/
-
 // loops through all 'option' children of color dropdown and sets displays 'inline'
 function displayAllColorItems() {
     for (let index = 0; index < 6; index++) {
@@ -91,13 +82,10 @@ function removeAndSetAttr(indexRem, indexSet) {
     colorDropdown[indexRem].removeAttribute('selected'); // removes selected attribute from option element
     colorDropdown[indexSet].setAttribute('selected', 'selected');
 }
-
-
-/** T-SHIRT INFO SECTION
+/** 
+ * T-SHIRT INFO SECTION
  * Upon selection of 'Theme', color dropdown is unhidden & 'Activities' section is unhidden
  * Activities Validation Message is inserted and displayed
- * 
- * After selection of an option
  * if user decides not to select a theme
  *  - color dropdown & activities section is hidden
  * else if user selects 'js puns' or 'heart js' design
@@ -110,28 +98,25 @@ designDropdown.addEventListener('change', e => {
     changeElemDisplay(colorDivContainer, 'inline');
     changeElemDisplay(activitiesParentContainer, 'block');
     activitiesParentContainer.before(activitiesValMesg);
-    if (designDropdown.value === "Select Theme") { // Incase user doesnt chooses to not select a theme, color option disables
+    if (designDropdown.value === "Select Theme") {
         changeElemDisplay(colorDivContainer, 'none');
         changeElemDisplay(activitiesParentContainer, 'none');
     } else if (designDropdown.value === "js puns") {
-        removeAndSetAttr(3, 0); //sets first child option element attribute to selected
-        displayAllColorItems(); // display all color options to inline
-        hideColorItems(0, 3);// hides element at from startInd to endInd
+        removeAndSetAttr(3, 0);
+        displayAllColorItems();
+        hideColorItems(0, 3);
     } else if (designDropdown.value === "heart js") {
-        removeAndSetAttr(0, 3);  //sets third child option element attribute to selected
-        displayAllColorItems(); // display all color options to inline
-        hideColorItems(3, 6) // hides element at from startInd to endInd
+        removeAndSetAttr(0, 3);
+        displayAllColorItems();
+        hideColorItems(3, 6)
     }
 });
-
-
 /***
  * HELPER FUNCTIONS FOR ACTIVITIES SECTION 
  ***/
 let indxName = 0; //readability for what the indexes are for name, time and cost in variable 'listOfSelectAttrValues' & 'listOFValuesToCompare'
 let indxTime = 1;
 let indxCost = 2;
-
 // loops through All activities and compares attribute values, if names don't match but times do - the 'option' is disabled or enabled  
 function findAttributeValueMatch(listOfSelectAttrValues, disable_enable) {
     for (let index = 0; index < activitiesInputChildren.length; index++) {
@@ -158,11 +143,8 @@ function addToTotalPrice(listOfSelectAttrValues) {
     totalPrice += parseInt(listOfSelectAttrValues[indxCost]);
     totalPriceElement.textContent = `Total: $${totalPrice}`;
 }
-
-
 /**
- * ACTIVITIES SECTION
- * 
+ * REGISTER ACTIVITIES SECTION
  * for loop adds event listerener 'change' to each checklist item,
  * store attr values of selected checklist item in 'listOfSelectAttrValue' calls 'getAttrValuesForActivitySelected( )'
  * if selected item name Not in list of 'registeredActivities'
@@ -185,17 +167,7 @@ for (let index = 0; index < activitiesInputChildren.length; index++) {
             registeredActivities.push(listOfSelectAttrValues[indxName]); //add option name selected to activities list
             addToTotalPrice(listOfSelectAttrValues);
             findAttributeValueMatch(listOfSelectAttrValues, true);
-            activitiesValMesg.remove();
-            // validations block
-            if (namecontainer.children.length > 8) {
-                changeElemDisplay(button, 'none');
-            } else if (registeredActivities.length === 0) {
-                changeElemDisplay(button, 'none');
-            } else if (creditCardNumber.value === '' || creditCardCVV.value === '' || zipCode.value === '') {
-                changeElemDisplay(button, 'none');
-            } else {
-                changeElemDisplay(button, 'block');
-            }
+            nameEmailActivitiesValidationBlock(activitiesValMesg); // validation block
         } else {
             // when deselect checklist element
             let indexOfNameMatch = registeredActivities.indexOf(listOfSelectAttrValues[indxName]);
@@ -209,46 +181,33 @@ for (let index = 0; index < activitiesInputChildren.length; index++) {
         }
     });
 };
-
-
-/**
- * 
- * payment
- * 
- */
-
-paymentDropdown.removeChild(paymentDropdown.children[0]);
-
-changeElemDisplay(paypalForm, 'none');
-changeElemDisplay(bitcoinForm, 'none');
-
-
+/***
+ * HELPER FUNCTIONS FOR PAYMEN SECTION
+ ***/
+// verifies all conditions before displaying submit button
+function paymentValidationBlock() {
+    if (namecontainer.children.length > 8) {
+        changeElemDisplay(button, 'none');
+    } else if (registeredActivities.length === 0) {
+        changeElemDisplay(button, 'none');
+    } else {
+        changeElemDisplay(button, 'block');
+    }
+}
 // hides all but selected element
 function displayAndHidePaymentInfo(e) {
     if (e.target.value === 'paypal') {
         changeElemDisplay(paypalForm, 'block');
         changeElemDisplay(creditCardPaymentForm, 'none');
         changeElemDisplay(bitcoinForm, 'none');
-        if (namecontainer.children.length > 8) {
-            changeElemDisplay(button, 'none');
-        } else if (registeredActivities.length === 0) {
-            changeElemDisplay(button, 'none');
-        } else {
-            changeElemDisplay(button, 'block');
-        }
+        paymentValidationBlock()
     }
     else if (e.target.value === 'bitcoin') {
         changeElemDisplay(bitcoinForm, 'block');
         changeElemDisplay(paypalForm, 'none');
         changeElemDisplay(creditCardPaymentForm, 'none');
         changeElemDisplay(button, 'block');
-        if (namecontainer.children.length > 8) {
-            changeElemDisplay(button, 'none');
-        } else if (registeredActivities.length === 0) {
-            changeElemDisplay(button, 'none');
-        } else {
-            changeElemDisplay(button, 'block');
-        }
+        paymentValidationBlock();
     }
     else {
         changeElemDisplay(creditCardPaymentForm, 'block');
@@ -257,14 +216,41 @@ function displayAndHidePaymentInfo(e) {
         changeElemDisplay(button, 'none');
     }
 }
-
+/**
+ * PAYMENT SECTION
+ * event listener for changes to payment dropdown
+ */
 paymentDropdown.addEventListener('change', e => {
     displayAndHidePaymentInfo(e);
 });
-
-// 
-// functions for event listeners
-// 
+/***
+ * VALIDATIONS For other sections, HELPER FUNCTIONS FOR EVENT LISTENERS
+ * must pass conditions before displaying submit button
+ ***/
+function creditCardValidationBlock(inputOne, inputTwo) {
+    if (registeredActivities.length === 0) {
+        changeElemDisplay(button, 'none');
+    } else if (namecontainer.children.length > 8) {
+        changeElemDisplay(button, 'none');
+    } else if (inputOne.value === '' || inputTwo.value === '') {
+        changeElemDisplay(button, 'none');
+    } else {
+        changeElemDisplay(button, 'block');
+    }
+}
+function nameEmailActivitiesValidationBlock(valMesg) {
+    valMesg.remove();
+    if (namecontainer.children.length > 8) {
+        changeElemDisplay(button, 'none');
+    } else if (registeredActivities.length === 0) {
+        changeElemDisplay(button, 'none');
+    } else if (creditCardNumber.value === '' || creditCardCVV.value === '' || zipCode.value === '') {
+        changeElemDisplay(button, 'none');
+    } else {
+        changeElemDisplay(button, 'block');
+    }
+}
+// validation condition for name section
 function noName() {  //for name
     if (yourname.value === "") {
         nameValMesg.textContent = "Must enter name"; // adds styling to p element          ***for Name event***
@@ -272,32 +258,20 @@ function noName() {  //for name
         changeElemDisplay(button, 'none')
     }
 }
-
-// event listener for name
+// validation condition for name section
 function removesOrAddsAlertWhileTypingName() {  // for name
     if (yourname.value === "") {
         nameValMesg.textContent = "Must enter name"; // adds styling to p element          ***for Name event***
         yourname.before(nameValMesg);
         changeElemDisplay(button, 'none');
         yourname.style.border = 'none'
-    }
-    else if (yourname.value.length > 0) {
-        nameValMesg.remove();
+    } else if (yourname.value.length > 0) {
         yourname.style.border = '3px solid lightgreen';
-        if (namecontainer.children.length > 8) {
-            changeElemDisplay(button, 'none');
-        } else if (registeredActivities.length === 0) {
-            changeElemDisplay(button, 'none');
-        } else if (creditCardNumber.value === '' || creditCardCVV.value === '' || zipCode.value === '') {
-            changeElemDisplay(button, 'none');
-        } else {
-            changeElemDisplay(button, 'none');
-        }
+        nameEmailActivitiesValidationBlock(nameValMesg); // validation block
     }
 }
-
-// event listener for email
-function removesOrAddsAlertWhileTypingEmail() { // for email
+// validation conditions for email section
+function removesOrAddsAlertWhileTypingEmail() {
     let thestringemail = youremail.value;
     if (thestringemail.indexOf('@') > thestringemail.indexOf('.com') || thestringemail.indexOf('.com') !== thestringemail.length - 4) {
         emailValMesg.textContent = "Please enter Email and format correctly";
@@ -305,21 +279,12 @@ function removesOrAddsAlertWhileTypingEmail() { // for email
         youremail.before(emailValMesg);
         changeElemDisplay(button, 'none');
     } else if (thestringemail.includes('@') && thestringemail.includes('.com')) {
-        emailValMesg.remove();
         youremail.style.border = '3px solid lightgreen';
-        if (namecontainer.children.length > 8) {
-            changeElemDisplay(button, 'none');
-        } else if (registeredActivities.length === 0) {
-            changeElemDisplay(button, 'none');
-        } else if (creditCardNumber.value === '' || creditCardCVV.value === '' || zipCode.value === '') {
-            changeElemDisplay(button, 'none');
-        } else {
-            changeElemDisplay(button, 'block');
-        }
+        nameEmailActivitiesValidationBlock(emailValMesg); // validation block for other sections
     }
 }
-
-function verifyEmail() {  // for email
+// validation conditions for email section
+function verifyEmail() {
     let thestringemail = youremail.value;
     if (thestringemail.indexOf('@') === -1 || thestringemail.indexOf('.com') === -1) {
         emailValMesg.textContent = "Please enter Email and format correctly";
@@ -327,28 +292,27 @@ function verifyEmail() {  // for email
         changeElemDisplay(button, 'none')
     }
 }
-
-
-yourname.addEventListener('focusout', noName, false);
-yourname.addEventListener('keyup', removesOrAddsAlertWhileTypingName, false);
-
-youremail.addEventListener('keyup', removesOrAddsAlertWhileTypingEmail, false);
-youremail.addEventListener('focusout', verifyEmail, false);
-
-
-/**
- * if the selected payment option is "Credit Card," 
- * make sure the user has supplied a Credit Card number, a Zip Code, and a 3 number CVV value before the form can be submitted.
- * Credit Card field should only accept a number between 13 and 16 digits.
- *  The Zip Code field should accept a 5-digit number.
- * The CVV should only accept a number that is exactly 3 digits long.
- */
-
-
+// validation conditions for creditcard section
+function nocreditCard() {
+    let creditCardNumbervalue = creditCardNumber.value;
+    if (creditCardNumber.value === "") {
+        creditValMesg.textContent = "please enter creditcard number";
+        creditCardNumber.before(creditValMesg);
+        changeElemDisplay(button, 'none');
+    }
+    for (let index = 0; index < creditCardNumbervalue.length; index++) {
+        if (isNaN(creditCardNumbervalue[index])) {
+            changeElemDisplay(button, 'none');
+            creditValMesg.textContent = "must be digits";
+            creditCardNumber.before(creditValMesg);
+        }
+    }
+}
 // creditcardCVV event listener
 creditCardCVV.addEventListener('keyup', e => {
     let creditCardCVVvalue = creditCardCVV.value;
     for (let index = 0; index < creditCardCVVvalue.length; index++) {
+        // CVV validation conditions
         if (isNaN(creditCardCVVvalue[index])) {
             creditCardCVV.style.border = 'solid 2px red';
             changeElemDisplay(button, 'none');
@@ -357,24 +321,15 @@ creditCardCVV.addEventListener('keyup', e => {
             changeElemDisplay(button, 'none');
         } else if (creditCardCVVvalue.length === 3) {
             creditCardCVV.style.border = '3px solid lightgreen';
-            if (registeredActivities.length === 0) {
-                changeElemDisplay(button, 'none');
-            } else if (namecontainer.children.length > 8) {
-                changeElemDisplay(button, 'none');
-            } else if (creditCardNumber.value === '' || zipCode.value === '') {
-                changeElemDisplay(button, 'none');
-            } else {
-                changeElemDisplay(button, 'block');
-            }
+            creditCardValidationBlock(creditCardNumber, zipCode);
         }
     }
 })
-
-
 // zipcode event listener
 zipCode.addEventListener('keyup', e => {
     let zipCodevalue = zipCode.value;
     for (let index = 0; index < zipCodevalue.length; index++) {
+        // zipcode validation conditions
         if (isNaN(zipCodevalue[index])) {
             zipCode.style.border = 'solid 2px red';
             changeElemDisplay(button, 'none');
@@ -383,23 +338,14 @@ zipCode.addEventListener('keyup', e => {
             changeElemDisplay(button, 'none');
         } else if (zipCodevalue.length === 5) {
             zipCode.style.border = '3px solid lightgreen';
-            if (registeredActivities.length === 0) {
-                changeElemDisplay(button, 'none');
-            } else if (namecontainer.children.length > 8) {
-                changeElemDisplay(button, 'none');
-            } else if (creditCardNumber.value === '' || creditCardCVV.value === '') {
-                changeElemDisplay(button, 'none');
-            } else {
-                changeElemDisplay(button, 'block');
-            }
+            creditCardValidationBlock(creditCardCVV, creditCardNumber);
         }
     }
 });
-
 // event listener for credit card
 creditCardNumber.addEventListener('keyup', e => {
     let creditCardNumbervalue = creditCardNumber.value;
-
+    // credit card number validation conditions
     if (creditCardNumbervalue.length < 13) {
         creditValMesg.textContent = "Please enter a number that is between 13 and 16 digits long.";
         creditCardNumber.before(creditValMesg);
@@ -413,35 +359,12 @@ creditCardNumber.addEventListener('keyup', e => {
     } else {
         creditCardNumber.style.border = '3px solid lightgreen';
         creditValMesg.remove();
-        if (registeredActivities.length === 0) {
-            changeElemDisplay(button, 'none');
-        } else if (namecontainer.children.length > 8) {
-            changeElemDisplay(button, 'none');
-        } else if (creditCardCVV.value === '' || zipCode.value === '') {
-            changeElemDisplay(button, 'none');
-        } else {
-            changeElemDisplay(button, 'block');
-        }
+        creditCardValidationBlock(creditCardCVV, zipCode);
     }
 });
-
-
-function nocreditCard() {  //for name
-    let creditCardNumbervalue = creditCardNumber.value;
-    if (creditCardNumber.value === "") {
-        creditValMesg.textContent = "please enter creditcard number"; // adds styling to p element          ***for Name event***
-        creditCardNumber.before(creditValMesg);
-        changeElemDisplay(button, 'none');
-    }
-    for (let index = 0; index < creditCardNumbervalue.length; index++) {
-        if (isNaN(creditCardNumbervalue[index])) {
-            creditCardNumber.style.border = 'solid 2px red';
-            changeElemDisplay(button, 'none');
-            creditValMesg.textContent = "must be digits"; // adds styling to p element          ***for Name event***
-            creditCardNumber.before(creditValMesg);
-        }
-    }
-}
-
+yourname.addEventListener('focusout', noName, false);
+yourname.addEventListener('keyup', removesOrAddsAlertWhileTypingName, false);
+youremail.addEventListener('keyup', removesOrAddsAlertWhileTypingEmail, false);
+youremail.addEventListener('focusout', verifyEmail, false);
 creditCardNumber.addEventListener('keyup', nocreditCard, false);
 creditCardNumber.addEventListener('focusout', nocreditCard, false);
