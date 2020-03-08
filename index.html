@@ -29,14 +29,14 @@
         <input type="email" id="mail" name="user-email" class="js-email">
 
         <label for="title">Job Role</label>
-        <select id="title" name="user-title" class="js-jobs">
+        <select id="title" name="user-title" class="js-Jobs-Dropdown">
           <option value="full-stack js developer">Full Stack JavaScript Developer</option>
           <option value="front-end developer">Front End Developer</option>
           <option value="back-end developer">Back End Developer</option>
           <option value="designer">Designer</option>
           <option value="student">Student</option>
           <option value="other">Other</option>
-          <input type="text" class="js-job__input" id="other-title" placeholder="Other : Your Job Role">
+          <input type="text" class="js-Jobs__Other__Input" id="other-title" placeholder="Other : Your Job Role">
         </select>
       </fieldset>
 
@@ -56,16 +56,16 @@
 
           <div>
             <label for="design">Design:</label>
-            <select id="design" name="user-design" class="js-design">
+            <select id="design" name="user-design" class="js-Design">
               <option>Select Theme</option>
               <option value="js puns">Theme - JS Puns</option>
               <option value="heart js">Theme - I &#9829; JS</option>
             </select>
           </div>
 
-          <div id="colors-js-puns" class="js-color-div-container">
+          <div id="colors-js-puns" class="js-Color-Div-Container">
             <label for="color">Color:</label>
-            <select id="color" class="js-color__Select__Elem">
+            <select id="color" class="js-Color__Select__Elem">
               <option value="cornflowerblue">Cornflower Blue (JS Puns shirt only)</option>
               <option value="darkslategrey">Dark Slate Grey (JS Puns shirt only)</option>
               <option value="gold">Gold (JS Puns shirt only)</option>
@@ -77,7 +77,7 @@
         </div>
       </fieldset>
 
-      <fieldset class="activities">
+      <fieldset class="js-Activities">
         <legend>Register for Activities</legend>
         <label>
           <input type="checkbox" name="all" data-cost="200"> Main Conference — $200
@@ -112,14 +112,14 @@
         <legend>Payment Info</legend>
 
         <label for="payment">I'm going to pay with:</label>
-        <select id="payment" name="user-payment" class="js-payment">
+        <select id="payment" name="user-payment" class="js-Payment">
           <option value="select method">Select Payment Method</option>
           <option value="credit card">Credit Card</option>
           <option value="paypal">PayPal</option>
           <option value="bitcoin">Bitcoin</option>
         </select>
 
-        <div id="credit-card" class="credit-card js-credit-card">
+        <div id="credit-card" class="credit-card js-Credit-Card">
 
           <div class="col-6 col">
             <label for="cc-num">Card Number:</label>
@@ -161,12 +161,12 @@
           </select>
         </div>
 
-        <div id="paypal" class="paypal js-paypal">
+        <div id="paypal" class="paypal js-Paypal">
           <p>If you selected the PayPal option we'll take you to Paypal's site to set up your billing information, when
             you click “Register” below.</p>
         </div>
 
-        <div id="bitcoin" class="bitcoin js-bitcoin">
+        <div id="bitcoin" class="bitcoin js-Bitcoin">
           <p>If you selected the Bitcoin option we'll take you to the Coinbase site to set up your billing information.
             Due to the nature of exchanging Bitcoin, all Bitcoin transactions will be final.</p>
         </div>
