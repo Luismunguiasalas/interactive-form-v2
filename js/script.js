@@ -5,97 +5,88 @@ const jobTextInput = document.querySelector('.js-Jobs__Other__Input') // selects
 const colorDivContainer = document.querySelector('.js-Color-Div-Container'); // selects color div container
 const colorDropdown = document.querySelector('.js-Color__Select__Elem'); // selects color dropdown element
 const designDropdown = document.querySelector('.js-Design'); // selects design dropdown 'select' element
-const activitiesParent = document.querySelector('.js-Activities'); // selects Activities 'fieldset' Element
+const activitiesParentContainer = document.querySelector('.js-Activities'); // selects Activities 'fieldset' Element
 const activitiesInputChildren = document.querySelectorAll('.js-Activities input'); // get all input[checkbox] elements of parent Activities
 const paymentDropdown = document.querySelector('.js-Payment'); // selects payment dropdown
-const creditCardInfo = document.querySelector('.js-Credit-Card'); // selects creditcard info
-const paypalInfo = document.querySelector('.js-Paypal'); // selects paypal info
-const bitcoinInfo = document.querySelector('.js-Bitcoin'); // selects bitcoin info
+const creditCardPaymentForm = document.querySelector('.js-Credit-Card'); // selects creditcard form
+const creditCardCVV = document.querySelector('#cvv'); // selects CVV input
+const creditCardNumber = document.querySelector('#cc-num'); //selects credit card input
+const zipCode = document.querySelector('#zip'); // selects zipcode input
+const paypalForm = document.querySelector('.js-Paypal'); // selects paypal form
+const bitcoinForm = document.querySelector('.js-Bitcoin'); // selects bitcoin form
+const namecontainer = document.querySelector('.js-name'); // selects fieldset name ***for Name event***
+const yourname = document.querySelector(".js-focus"); // selects name input        ***for Name event***
+const youremail = document.querySelector('.js-email'); // selects email input      ***for email event***
+const button = document.querySelector('.js-submit'); // selects submit button      ***for button***
+
+// create 'p' elements 
+const nameValMesg = document.createElement('p'); // create element                 ***for Name event***
+const emailValMesg = document.createElement('p'); // create element                ***for email event***
+const creditValMesg = document.createElement('p'); // create element                ***for credit event***
+const activitiesValMesg = document.createElement('p') // create p elemt for warning        ***for checklist***
+const totalPriceElement = document.createElement('p'); // create p element for price                 ***for checklist***
+
+// function to change display
+const changeElemDisplay = (Element, displayValue) => Element.style.display = displayValue; // hides element given as a arguement
+function validationStyling(element) {
+    element.style.textAlign = 'center'; // adds styling to element               ***for Name event***
+    element.style.border = 'solid 2px red'; // adds styling to element
+}
+
+// styling for validation messages
+validationStyling(nameValMesg);
+validationStyling(emailValMesg);
+validationStyling(creditValMesg);
+validationStyling(activitiesValMesg);
+
+// elements to hide initially
+changeElemDisplay(jobTextInput, 'none'); // hides other job text input element           ***for other job input***
+changeElemDisplay(colorDivContainer, 'none'); // hides color drop down                   ***for color t-shirt***
+changeElemDisplay(activitiesParentContainer, 'none'); // hides activities checklist      ***for checklist***
+changeElemDisplay(button, 'none');          //                                           ***for button***
+
+
+let totalPrice = 0; // total price of activities                                          ***for checklist***
+let registeredActivities = []; // keeps track of activities for 'register for activities' ***for checklist***
+totalPriceElement.textContent = 'Total: $0'; // add content into p element                           ***for checklist***
+activitiesParentContainer.append(totalPriceElement); // append p element into activities parent      ***for checklist***
+activitiesValMesg.textContent = "Must select atleast One"; // add text content             ***for checklist***
 
 
 
-let attendingActivities = []; // list for activities
-let totalPrice = 0; // total price of activities
-
-const colorOptionDefault = document.createElement('option'); // creates option element
-jobTextInput.style.display = "none"; // hiddes other job text input element  ***for job***
-
-const checklistWarning = document.createElement('p') // create p elemt for warning ***for checklist***
-checklistWarning.textContent = "Must select ATLEAST ONE"; // add text content      ***for checklist***
-checklistWarning.style.textAlign = 'center'; // adds styling to p element          ***for checklist***
-checklistWarning.style.backgroundColor = 'crimson'; // adds styling to p element   ***for checklist***
-checklistWarning.style.color = 'white'; // adds styling to p element               ***for checklist***
-
-const elementprice = document.createElement('p'); // create p element for price    ***for checklist***
-elementprice.textContent = 'Total: $0'; // add content into p element              ***for checklist***
-activitiesParent.append(elementprice); // append p element into activities parent  ***for checklist***
-
-
-// colorOptionDefault.textContent = "Please Select a T-Shirt Theme"; //add text content to option element  ***for t-shirt****
-// colorOptionDefault.setAttribute('selected', 'selected'); // selects message by default                  ***for t-shirt****
-// colorDropdown.appendChild(colorOptionDefault);  // appends message to color dropdown                    ***for t-shirt****
-// colorDropdown.setAttribute('disabled', 'disabled'); //disables color dropdown                           ***for t-shirt****
-
-
-
-
-
-
-const cvvinput = document.querySelector('#cvv');
-const creditinput = document.querySelector('#cc-num');
-const zipinput = document.querySelector('#zip');
-
-
-
-
-
-colorDivContainer.style.display = 'none'; // hides color drop down
-activitiesParent.style.display = 'none'; // hides checklist
-
-
-
-
-
-
-// console.log(activitiesInputChildren[0].setAttribute('selected', 'selected'));
-const allconference = activitiesInputChildren[0];
-// allconference.checked = true; // auto check main conference
-// console.log(allconference);
-
-
-
-
-/** Job Role section
+/** 
+ * JOB ROLE SECTION
  * listens for a change in state on job dropdown
- * if 'other' is selected from job dropdown, job text input is unhidden
+ * if 'other' is selected from job dropdown, job text input is displayed.
  * else 'other' stays hidden
  **/
 jobDropdown.addEventListener('change', e => {
     if (jobDropdown.value === "other") {
-        jobTextInput.style.display = "block";
+        changeElemDisplay(jobTextInput, 'block');
     } else {
-        jobTextInput.style.display = "none";
+        changeElemDisplay(jobTextInput, 'none');
     }
 });
 
 
 
-/** T-shirt info Section
- * loops through all children of design dropdown and sets displays 'inline'
- */
-function displayColorOptions() {
+/***
+ * HELPER FUNCTIONS FOR T-SHIRT INFO SECTION
+ ***/
+
+// loops through all 'option' children of color dropdown and sets displays 'inline'
+function displayAllColorItems() {
     for (let index = 0; index < 6; index++) {
-        colorDropdown[index].style.display = 'inline';
+        changeElemDisplay(colorDropdown[index], 'inline');
     }
 }
-
-function hideElementsloop(startInd, endIndex) {
+// loops through color 'option' children and hides elements at start index
+function hideColorItems(startInd, endIndex) {
     for (let index = startInd; index < endIndex; index++) {
-        console.log(colorDropdown[index]);
-        colorDropdown[index].style.display = 'none';
+        changeElemDisplay(colorDropdown[index], 'none');
     }
 }
-
+// removes attribute to color 'option' children at indexRem and sets attribute at indexSet
 function removeAndSetAttr(indexRem, indexSet) {
     colorDropdown[indexRem].removeAttribute('selected'); // removes selected attribute from option element
     colorDropdown[indexSet].setAttribute('selected', 'selected');
@@ -103,12 +94,12 @@ function removeAndSetAttr(indexRem, indexSet) {
 
 
 /** T-SHIRT INFO SECTION
- * User selects design dropdown
+ * Upon selection of 'Theme', color dropdown is unhidden & 'Activities' section is unhidden
+ * Activities Validation Message is inserted and displayed
+ * 
  * After selection of an option
- *  - color dropdown is nolonger disabled
- *  - default option of 'please select T-shirt..' is removed, and no longer displayed as an option
- * if user chooses to not select a theme after all
- *  - color dropdown is disabled and selects and 'please select T-shirt..' is displayed
+ * if user decides not to select a theme
+ *  - color dropdown & activities section is hidden
  * else if user selects 'js puns' or 'heart js' design
  *  - any previous 'selected' attribute is removed from option element at index 3 or 0
  *  - attribute 'selected' is added to option element at index  3 or 0
@@ -116,120 +107,110 @@ function removeAndSetAttr(indexRem, indexSet) {
  *  - hides all option elements from specified index
  */
 designDropdown.addEventListener('change', e => {
-    colorDivContainer.style.display = 'inline';
-    activitiesParent.style.display = 'block';
-    activitiesParent.insertBefore(checklistWarning, activitiesParent.childNodes[0]);
-    // colorDropdown.removeAttribute('disabled');
-    // colorOptionDefault.removeAttribute('selected');
-    // colorOptionDefault.style.display = 'none';
+    changeElemDisplay(colorDivContainer, 'inline');
+    changeElemDisplay(activitiesParentContainer, 'block');
+    activitiesParentContainer.before(activitiesValMesg);
     if (designDropdown.value === "Select Theme") { // Incase user doesnt chooses to not select a theme, color option disables
-        colorDivContainer.style.display = 'none';
-        activitiesParent.style.display = 'none';
-        // colorDropdown.setAttribute('disabled', 'disabled'); //disables color dropdown
-        // colorOptionDefault.setAttribute('selected', 'selected'); // selects 'please selects T-shirt theme' option
+        changeElemDisplay(colorDivContainer, 'none');
+        changeElemDisplay(activitiesParentContainer, 'none');
     } else if (designDropdown.value === "js puns") {
-        console.log('js puns');
-        colorDropdown.childNodes[3].style.display = 'none';
-        colorDropdown.childNodes[4].style.display = 'none';
-        colorDropdown.childNodes[5].style.display = 'none';
-        // removeAndSetAttr(3, 0); //sets first child option element attribute to selected
-        // displayColorOptions(); // display all color options to inline
-        // hideElementsloop(0, 3);// hides element at from startInd to endInd
+        removeAndSetAttr(3, 0); //sets first child option element attribute to selected
+        displayAllColorItems(); // display all color options to inline
+        hideColorItems(0, 3);// hides element at from startInd to endInd
     } else if (designDropdown.value === "heart js") {
-        console.log('heart js');
-        // removeAndSetAttr(0, 3);  //sets third child option element attribute to selected
-        // displayColorOptions(); // display all color options to inline
-        // hideElementsloop(3, 6) // hides element at from startInd to endInd
+        removeAndSetAttr(0, 3);  //sets third child option element attribute to selected
+        displayAllColorItems(); // display all color options to inline
+        hideColorItems(3, 6) // hides element at from startInd to endInd
     }
-})
+});
 
 
+/***
+ * HELPER FUNCTIONS FOR ACTIVITIES SECTION 
+ ***/
+let indxName = 0; //readability for what the indexes are for name, time and cost in variable 'listOfSelectAttrValues' & 'listOFValuesToCompare'
+let indxTime = 1;
+let indxCost = 2;
 
-/*** checklist section
- * 
- * 
- * 
- */
-function enableDisableMatchedElement(valueofreturn, dis_en) {
-    for (let indx = 0; indx < activitiesInputChildren.length; indx++) { // for loop
-        let newvalueofreturn = getAttributeValues(indx); // get All attribute values from options checklist
-        if (valueofreturn[1] === newvalueofreturn[1] && valueofreturn[0] !== newvalueofreturn[0]) { // if option selected time matches with any time in checklist && option selected name doesnt match with any name in checklist 
-            activitiesInputChildren[indx].disabled = dis_en; // enables or disables element that doesnt match name but matches time
+// loops through All activities and compares attribute values, if names don't match but times do - the 'option' is disabled or enabled  
+function findAttributeValueMatch(listOfSelectAttrValues, disable_enable) {
+    for (let index = 0; index < activitiesInputChildren.length; index++) {
+        let listOfAttrValuesToCompare = getAttrValuesForActivitySelected(index);
+        if (listOfSelectAttrValues[indxName] !== listOfAttrValuesToCompare[indxName] && listOfSelectAttrValues[indxTime] === listOfAttrValuesToCompare[indxTime]) {
+            activitiesInputChildren[index].disabled = disable_enable; // enables or disables element that doesnt match name but matches time
         }
     }
 }
-
-function getAttributeValues(index) {
+// gets attributes from selected activity at 'index', returns list of attribute values
+function getAttrValuesForActivitySelected(index) {
     let eventName = activitiesInputChildren[index].getAttribute('name');
     let eventTime = activitiesInputChildren[index].getAttribute('data-day-and-time');
     let eventCost = activitiesInputChildren[index].getAttribute('data-cost');
     return [eventName, eventTime, eventCost];
 }
-
-function subtractFromTotalPrice(valueofreturn) {
-    totalPrice -= parseInt(valueofreturn[2]); // removes price from total price
-    elementprice.textContent = `Total: $${totalPrice}`;
+// subtracts value of price attr from total price
+function subtractFromTotalPrice(listOfSelectAttrValues) {
+    totalPrice -= parseInt(listOfSelectAttrValues[indxCost]);
+    totalPriceElement.textContent = `Total: $${totalPrice}`;
+}
+// adds value of price attr to total price
+function addToTotalPrice(listOfSelectAttrValues) {
+    totalPrice += parseInt(listOfSelectAttrValues[indxCost]);
+    totalPriceElement.textContent = `Total: $${totalPrice}`;
 }
 
-function addToTotalPrice(valueofreturn) {
-    totalPrice += parseInt(valueofreturn[2]); // adds price to total price
-    elementprice.textContent = `Total: $${totalPrice}`;
-}
 
+/**
+ * ACTIVITIES SECTION
+ * 
+ * for loop adds event listerener 'change' to each checklist item,
+ * store attr values of selected checklist item in 'listOfSelectAttrValue' calls 'getAttrValuesForActivitySelected( )'
+ * if selected item name Not in list of 'registeredActivities'
+ * - add name to 'registeredActivities', 
+ * - add price to 'totalPrice' and update 'totalPriceElement' 
+ * - finds checklist items with matched attr values and disables them
+ * - Removes Validation Message
+ * - Validation block
+ * else 
+ * - indexOf unselected item name in 'registeredActivities'
+ * - removes name from activities list
+ * - substracts price from 'totalPrice'
+ * - finds chelist items with matched attr values and enables them
+ */
 for (let index = 0; index < activitiesInputChildren.length; index++) {
     activitiesInputChildren[index].addEventListener('change', e => {
-        let valueofreturn = getAttributeValues(index); // Only get attribute values for option selected
+        let listOfSelectAttrValues = getAttrValuesForActivitySelected(index); // get attribute values from activity selected and 
         // when select checklist element
-        if (attendingActivities.indexOf(valueofreturn[0]) === -1) { //if name of attribute was NOT in activities list run nested code
-            addToTotalPrice(valueofreturn);
-            attendingActivities.push(valueofreturn[0]); //add option name selected to activities list
-            enableDisableMatchedElement(valueofreturn, true);
-            // console.log(attendingActivities);
-            checklistWarning.remove();
-            // console.log(namecontainer.children.length + " children");
-
+        if (registeredActivities.indexOf(listOfSelectAttrValues[indxName]) === -1) { //if name of attribute was NOT in activities list run nested code
+            registeredActivities.push(listOfSelectAttrValues[indxName]); //add option name selected to activities list
+            addToTotalPrice(listOfSelectAttrValues);
+            findAttributeValueMatch(listOfSelectAttrValues, true);
+            activitiesValMesg.remove();
+            // validations block
             if (namecontainer.children.length > 8) {
-                button.style.display = 'none';
-                console.log('name 1')
-            }
-            else if (attendingActivities.length === 0) {
-                button.style.display = 'none';
-                console.log('name 2')
-                // console.log('zerooo')
-            } else if (creditinput.value === '' || cvvinput.value === '' || zipinput.value === '') {
-                button.style.display = 'none';
-                console.log('name 3')
+                changeElemDisplay(button, 'none');
+            } else if (registeredActivities.length === 0) {
+                changeElemDisplay(button, 'none');
+            } else if (creditCardNumber.value === '' || creditCardCVV.value === '' || zipCode.value === '') {
+                changeElemDisplay(button, 'none');
             } else {
-                button.style.display = 'block';
-                console.log('name 4')
+                changeElemDisplay(button, 'block');
             }
-
-
-
         } else {
             // when deselect checklist element
-            let namee = attendingActivities.indexOf(valueofreturn[0]); // searches name of option selected in activities list
-            subtractFromTotalPrice(valueofreturn);
-            attendingActivities.splice(namee, 1); // removes option name from activities list 
-            enableDisableMatchedElement(valueofreturn, false);
-            // console.log(attendingActivities.length);
-            // checklistWarning.remove();
-            if (attendingActivities.length === 0) {
-                activitiesParent.insertBefore(checklistWarning, activitiesParent.childNodes[0]);
-                button.style.display = 'none';
-                // console.log('zerooo')
-
+            let indexOfNameMatch = registeredActivities.indexOf(listOfSelectAttrValues[indxName]);
+            registeredActivities.splice(indexOfNameMatch, 1);
+            subtractFromTotalPrice(listOfSelectAttrValues);
+            findAttributeValueMatch(listOfSelectAttrValues, false);
+            if (registeredActivities.length === 0) {
+                activitiesParentContainer.before(activitiesValMesg);
+                changeElemDisplay(button, 'none');
             }
         }
     });
 };
 
 
-/**
- *
- *
- *
- */
 /**
  * 
  * payment
@@ -238,187 +219,102 @@ for (let index = 0; index < activitiesInputChildren.length; index++) {
 
 paymentDropdown.removeChild(paymentDropdown.children[0]);
 
-function createChildren() {
-    const creditCard = paymentDropdown.children[1];
-    const paypal = paymentDropdown.children[2];
-    const bitcoin = paymentDropdown.children[3];
-    return { creditCard, paypal, bitcoin };
+changeElemDisplay(paypalForm, 'none');
+changeElemDisplay(bitcoinForm, 'none');
 
-}
-
-const { creditCard, paypal, bitcoin } = createChildren();
-
-// console.log(paymentDropdown.children[1]);
-
-// const creditCard = paymentDropdown.children[1];  // selects child credit card from payment drop down  ***for payment***
-// const paypal = paymentDropdown.children[2];      // selects child paypal from payment drop down       ***for payment***
-// const bitcoin = paymentDropdown.children[3];     // selects child bitcoin from payment drop down      ***for payment***
-// creditCard.setAttribute('selected', 'selected');  // selects credit card by default                   ***for payment***
-// console.log(creditCard);
-
-paypalInfo.style.display = 'none';  // hiddes paypal   ***for payment***
-bitcoinInfo.style.display = 'none'; // hiddes other job text input element  ***for payment***
 
 // hides all but selected element
 function displayAndHidePaymentInfo(e) {
     if (e.target.value === 'paypal') {
-        paypalInfo.style.display = 'block';
-        creditCardInfo.style.display = 'none';
-        bitcoinInfo.style.display = 'none';
-        button.style.display = 'block';
+        changeElemDisplay(paypalForm, 'block');
+        changeElemDisplay(creditCardPaymentForm, 'none');
+        changeElemDisplay(bitcoinForm, 'none');
+        if (namecontainer.children.length > 8) {
+            changeElemDisplay(button, 'none');
+        } else if (registeredActivities.length === 0) {
+            changeElemDisplay(button, 'none');
+        } else {
+            changeElemDisplay(button, 'block');
+        }
     }
     else if (e.target.value === 'bitcoin') {
-        bitcoinInfo.style.display = 'block';
-        paypalInfo.style.display = 'none';
-        creditCardInfo.style.display = 'none';
-        button.style.display = 'block';
+        changeElemDisplay(bitcoinForm, 'block');
+        changeElemDisplay(paypalForm, 'none');
+        changeElemDisplay(creditCardPaymentForm, 'none');
+        changeElemDisplay(button, 'block');
+        if (namecontainer.children.length > 8) {
+            changeElemDisplay(button, 'none');
+        } else if (registeredActivities.length === 0) {
+            changeElemDisplay(button, 'none');
+        } else {
+            changeElemDisplay(button, 'block');
+        }
     }
     else {
-        creditCardInfo.style.display = 'block';
-        paypalInfo.style.display = 'none';
-        bitcoinInfo.style.display = 'none';
-        button.style.display = 'none';
+        changeElemDisplay(creditCardPaymentForm, 'block');
+        changeElemDisplay(paypalForm, 'none');
+        changeElemDisplay(bitcoinForm, 'none');
+        changeElemDisplay(button, 'none');
     }
 }
-// paypalInfo.style.display = 'block';
-// console.log(paymentDropdown.children);
-// console.log(paymentDropdown.childNodes);
+
 paymentDropdown.addEventListener('change', e => {
     displayAndHidePaymentInfo(e);
 });
 
-
-/**
- * payment
- *
- *
- *
- */
-
-
-
-
-
-
-
-
-
-
-/**
- *
- *
- *form validation
- *
- *
-*/
-const namecontainer = document.querySelector('.js-name'); // selects fieldset name ***for Name event***
-const nameWarning = document.createElement('p'); // create element                 ***for Name event***
-const yourname = document.querySelector(".js-focus"); // selects name input        ***for Name event***
-const button = document.querySelector('.js-submit'); // selects submit button      ***for button***
-button.style.display = 'none';
-// console.log(namecontainer.length);
-
-// nameWarning.textContent = "Must enter name"; // adds styling to p element          ***for Name event***
-nameWarning.style.textAlign = 'center'; // adds styling to p element               ***for Name event***
-nameWarning.style.backgroundColor = 'crimson'; // adds styling to p element        ***for Name event***
-nameWarning.style.color = 'white'; // adds styling to p element                    ***for Name event***
-// nameWarning.setAttribute('id', 'namealert');
-
-const youremail = document.querySelector('.js-email'); // selects email input      ***for email event***
-const emailWarning = document.createElement('p'); // create element                ***for email event***
-// console.log(youremail);
-
-
-
-emailWarning.style.textAlign = 'center' // adds styling to p element               ***for email event***
-emailWarning.style.backgroundColor = 'crimson'; // adds styling to p element       ***for email event***
-emailWarning.style.color = 'white'; // adds styling to p element                   ***for email event***
-// emailWarning.setAttribute('id', 'emailalert');
-// let canOrCantSubmit = [];
-
-const creditWarning = document.createElement('p'); // create element                ***for credit event***
-// console.log(youremail);
-
-
-creditWarning.style.textAlign = 'center' // adds styling to p element               ***for credit event***
-creditWarning.style.backgroundColor = 'crimson'; // adds styling to p element       ***for credit event***
-creditWarning.style.color = 'white'; // adds styling to p element                   ***for credit event***
-
-
-
+// 
+// functions for event listeners
+// 
 function noName() {  //for name
     if (yourname.value === "") {
-        nameWarning.textContent = "Must enter name"; // adds styling to p element          ***for Name event***
-        yourname.before(nameWarning);
-        button.style.display = 'none';
+        nameValMesg.textContent = "Must enter name"; // adds styling to p element          ***for Name event***
+        yourname.before(nameValMesg);
+        changeElemDisplay(button, 'none')
     }
 }
-// && namecontainer.children.length > 10
+
+// event listener for name
 function removesOrAddsAlertWhileTypingName() {  // for name
     if (yourname.value === "") {
-        nameWarning.textContent = "Must enter name"; // adds styling to p element          ***for Name event***
-        yourname.before(nameWarning);
-        yourname.style.border = 'none';
-        button.style.display = 'none';
+        nameValMesg.textContent = "Must enter name"; // adds styling to p element          ***for Name event***
+        yourname.before(nameValMesg);
+        changeElemDisplay(button, 'none');
+        yourname.style.border = 'none'
     }
     else if (yourname.value.length > 0) {
-        nameWarning.remove();
+        nameValMesg.remove();
         yourname.style.border = '3px solid lightgreen';
-        // button.style.display = 'block';
         if (namecontainer.children.length > 8) {
-            button.style.display = 'none';
-            console.log('name 1')
-        }
-        else if (attendingActivities.length === 0) {
-            button.style.display = 'none';
-            console.log('name 2')
-            // console.log('zerooo')
-        } else if (creditinput.value === '' || cvvinput.value === '' || zipinput.value === '') {
-            button.style.display = 'none';
-            console.log('name 3')
+            changeElemDisplay(button, 'none');
+        } else if (registeredActivities.length === 0) {
+            changeElemDisplay(button, 'none');
+        } else if (creditCardNumber.value === '' || creditCardCVV.value === '' || zipCode.value === '') {
+            changeElemDisplay(button, 'none');
         } else {
-            button.style.display = 'block';
-            console.log('name 4')
+            changeElemDisplay(button, 'none');
         }
     }
-    // else if (yourname.value.length > 0) {
-    //     button.style.display = 'block';
-    // }
 }
 
-
+// event listener for email
 function removesOrAddsAlertWhileTypingEmail() { // for email
     let thestringemail = youremail.value;
-    // if (thestringemail.indexOf('@') === -1 || thestringemail.indexOf('.com') === -1) {
-    //     emailWarning.textContent = "Must enter email also Verify that it is formatted correctly";
-    //     youremail.before(emailWarning);
-    //     button.style.display = 'none';
-    // }
     if (thestringemail.indexOf('@') > thestringemail.indexOf('.com') || thestringemail.indexOf('.com') !== thestringemail.length - 4) {
-        emailWarning.textContent = "Must format correctly";
+        emailValMesg.textContent = "Please enter Email and format correctly";
         youremail.style.border = 'none';
-        youremail.before(emailWarning);
-        button.style.display = 'none';
+        youremail.before(emailValMesg);
+        changeElemDisplay(button, 'none');
     } else if (thestringemail.includes('@') && thestringemail.includes('.com')) {
-        emailWarning.remove();
+        emailValMesg.remove();
         youremail.style.border = '3px solid lightgreen';
         if (namecontainer.children.length > 8) {
-            button.style.display = 'none';
-            console.log('email 1')
-        } else if (attendingActivities.length === 0) {
-            button.style.display = 'none';
-            console.log('email 2')
-            // console.log('zerooo')
-        }
-
-        else if (creditinput.value === '' || cvvinput.value === '' || zipinput.value === '') {
-            button.style.display = 'none';
-            console.log('email 3')
+            changeElemDisplay(button, 'none');
+        } else if (registeredActivities.length === 0) {
+            changeElemDisplay(button, 'none');
+        } else if (creditCardNumber.value === '' || creditCardCVV.value === '' || zipCode.value === '') {
+            changeElemDisplay(button, 'none');
         } else {
-            // console.log('thissss');
-            console.log('email 4')
-            // youremail.style.border = '3px solid lightgreen';
-            button.style.display = 'block';
+            changeElemDisplay(button, 'block');
         }
     }
 }
@@ -426,27 +322,21 @@ function removesOrAddsAlertWhileTypingEmail() { // for email
 function verifyEmail() {  // for email
     let thestringemail = youremail.value;
     if (thestringemail.indexOf('@') === -1 || thestringemail.indexOf('.com') === -1) {
-        emailWarning.textContent = "Must enter email also Verify that it is formatted correctly";
-        youremail.before(emailWarning);
-        button.style.display = 'none';
+        emailValMesg.textContent = "Please enter Email and format correctly";
+        youremail.before(emailValMesg);
+        changeElemDisplay(button, 'none')
     }
 }
 
 
 yourname.addEventListener('focusout', noName, false);
-
 yourname.addEventListener('keyup', removesOrAddsAlertWhileTypingName, false);
 
 youremail.addEventListener('keyup', removesOrAddsAlertWhileTypingEmail, false);
 youremail.addEventListener('focusout', verifyEmail, false);
 
 
-
-
-
 /**
- * 
- * 
  * if the selected payment option is "Credit Card," 
  * make sure the user has supplied a Credit Card number, a Zip Code, and a 3 number CVV value before the form can be submitted.
  * Credit Card field should only accept a number between 13 and 16 digits.
@@ -455,156 +345,103 @@ youremail.addEventListener('focusout', verifyEmail, false);
  */
 
 
-// const cvvinput = document.querySelector('#cvv');
-// const creditinput = document.querySelector('#cc-num');
-// const zipinput = document.querySelector('#zip');
-
-cvvinput.addEventListener('keyup', e => {
-    let cvvinputvalue = cvvinput.value;
-    console.log(cvvinputvalue.length);
-    for (let index = 0; index < cvvinputvalue.length; index++) {
-        if (isNaN(cvvinputvalue[index])) {
-            cvvinput.style.border = 'solid 2px red';
-            button.style.display = 'none';
-        }
-        else if (cvvinputvalue.length > 3) {
-            cvvinput.style.border = 'solid 2px red';
-            button.style.display = 'none';
-        }
-        else if (cvvinputvalue.length === 3) {
-            cvvinput.style.border = '3px solid lightgreen';
-            console.log('4')
-            // button.style.display = 'block';
-            if (attendingActivities.length === 0) {
-                button.style.display = 'none';
-                console.log('cvv1')
+// creditcardCVV event listener
+creditCardCVV.addEventListener('keyup', e => {
+    let creditCardCVVvalue = creditCardCVV.value;
+    for (let index = 0; index < creditCardCVVvalue.length; index++) {
+        if (isNaN(creditCardCVVvalue[index])) {
+            creditCardCVV.style.border = 'solid 2px red';
+            changeElemDisplay(button, 'none');
+        } else if (creditCardCVVvalue.length > 3) {
+            creditCardCVV.style.border = 'solid 2px red';
+            changeElemDisplay(button, 'none');
+        } else if (creditCardCVVvalue.length === 3) {
+            creditCardCVV.style.border = '3px solid lightgreen';
+            if (registeredActivities.length === 0) {
+                changeElemDisplay(button, 'none');
+            } else if (namecontainer.children.length > 8) {
+                changeElemDisplay(button, 'none');
+            } else if (creditCardNumber.value === '' || zipCode.value === '') {
+                changeElemDisplay(button, 'none');
+            } else {
+                changeElemDisplay(button, 'block');
             }
-            else if (namecontainer.children.length > 8) {
-                button.style.display = 'none';
-                console.log('cvv2')
-            }
-            else if (creditinput.value === '' || zipinput.value === '') {
-                button.style.display = 'none';
-                console.log('cvv3')
-            }
-            else {
-                console.log('cvv4')
-                button.style.display = 'block';
-            }
-
         }
     }
 })
 
-// 
 
-zipinput.addEventListener('keyup', e => {
-    let zipinputvalue = zipinput.value;
-    console.log(zipinputvalue.length);
-    for (let index = 0; index < zipinputvalue.length; index++) {
-        if (isNaN(zipinputvalue[index])) {
-            zipinput.style.border = 'solid 2px red';
-            button.style.display = 'none';
-        }
-        else if (zipinputvalue.length > 5 || zipinputvalue.length < 5) {
-            zipinput.style.border = 'solid 2px red';
-            button.style.display = 'none';
-        } else if (zipinputvalue.length === 5) {
-            zipinput.style.border = '3px solid lightgreen';
-            if (attendingActivities.length === 0) {
-                button.style.display = 'none';
-                console.log('zip 1');
-            }
-            else if (namecontainer.children.length > 8) {
-                button.style.display = 'none';
-                console.log('zip 2')
-            }
-            else if (creditinput.value === '' || cvvinput.value === '') {
-                button.style.display = 'none';
-                console.log('zip 3')
-            }
-            else {
-                button.style.display = 'block';
-                console.log('zip 4')
+// zipcode event listener
+zipCode.addEventListener('keyup', e => {
+    let zipCodevalue = zipCode.value;
+    for (let index = 0; index < zipCodevalue.length; index++) {
+        if (isNaN(zipCodevalue[index])) {
+            zipCode.style.border = 'solid 2px red';
+            changeElemDisplay(button, 'none');
+        } else if (zipCodevalue.length > 5 || zipCodevalue.length < 5) {
+            zipCode.style.border = 'solid 2px red';
+            changeElemDisplay(button, 'none');
+        } else if (zipCodevalue.length === 5) {
+            zipCode.style.border = '3px solid lightgreen';
+            if (registeredActivities.length === 0) {
+                changeElemDisplay(button, 'none');
+            } else if (namecontainer.children.length > 8) {
+                changeElemDisplay(button, 'none');
+            } else if (creditCardNumber.value === '' || creditCardCVV.value === '') {
+                changeElemDisplay(button, 'none');
+            } else {
+                changeElemDisplay(button, 'block');
             }
         }
-
     }
 });
-// const creditcardparent = document.querySelector('#credit-card');
 
-creditinput.addEventListener('keyup', e => {
-    let creditinputvalue = creditinput.value;
+// event listener for credit card
+creditCardNumber.addEventListener('keyup', e => {
+    let creditCardNumbervalue = creditCardNumber.value;
 
-    if (creditinputvalue.length < 13) {
-        // const creditcardparent = document.querySelector('#credit-card');
-        creditWarning.textContent = "Please enter a number that is between 13 and 16 digits long."; // adds styling to p element          ***for Name event***
-        creditinput.before(creditWarning);
-        creditinput.style.border = '2px solid red';
-
-        // console.log('must be within 13 - 16 digits');
-        button.style.display = 'none';
-    } else if (creditinputvalue.length > 16) {
-        creditWarning.textContent = "must be within 13 - 16 digits"; // adds styling to p element          ***for Name event***
-        creditinput.before(creditWarning);
-        creditinput.style.border = '2px solid red';
-
-        // console.log('must be within 13 - 16 digits');
-        button.style.display = 'none';
-    }
-    else {
-        creditinput.style.border = '3px solid lightgreen';
-        creditWarning.remove();
-        if (attendingActivities.length === 0) {
-            button.style.display = 'none';
-            console.log('credit 1')
-        }
-        else if (namecontainer.children.length > 8) {
-            button.style.display = 'none';
-            console.log('credit 2')
-        }
-        else if (cvvinput.value === '' || zipinput.value === '') {
-            button.style.display = 'none';
-            console.log('credit 3')
-        }
-        else {
-            button.style.display = 'block';
-            console.log('credit 4')
+    if (creditCardNumbervalue.length < 13) {
+        creditValMesg.textContent = "Please enter a number that is between 13 and 16 digits long.";
+        creditCardNumber.before(creditValMesg);
+        creditCardNumber.style.border = '2px solid red';
+        changeElemDisplay(button, 'none')
+    } else if (creditCardNumbervalue.length > 16) {
+        creditValMesg.textContent = "must be within 13 - 16 digits";
+        creditCardNumber.before(creditValMesg);
+        creditCardNumber.style.border = '2px solid red';
+        changeElemDisplay(button, 'none')
+    } else {
+        creditCardNumber.style.border = '3px solid lightgreen';
+        creditValMesg.remove();
+        if (registeredActivities.length === 0) {
+            changeElemDisplay(button, 'none');
+        } else if (namecontainer.children.length > 8) {
+            changeElemDisplay(button, 'none');
+        } else if (creditCardCVV.value === '' || zipCode.value === '') {
+            changeElemDisplay(button, 'none');
+        } else {
+            changeElemDisplay(button, 'block');
         }
     }
 });
 
 
 function nocreditCard() {  //for name
-    // if (creditinput.value === "") {
-    //     // const creditcardparent = document.querySelector('#credit-card');
-    //     creditWarning.textContent = "please enter creditcard number"; // adds styling to p element          ***for Name event***
-    //     // creditinput.before(nameWarning);
-    //     // creditinput.textContent = "please enter creditcard number"; // adds styling to p element          ***for Name event***
-    //     creditinput.before(creditWarning);
-    //     button.style.display = 'none';
-    let creditinputvalue = creditinput.value;
-    // }
-    if (creditinput.value === "") {
-        // const creditcardparent = document.querySelector('#credit-card');
-        creditWarning.textContent = "please enter creditcard number"; // adds styling to p element          ***for Name event***
-        // creditinput.before(nameWarning);
-        // creditinput.textContent = "please enter creditcard number"; // adds styling to p element          ***for Name event***
-        creditinput.before(creditWarning);
-        button.style.display = 'none';
+    let creditCardNumbervalue = creditCardNumber.value;
+    if (creditCardNumber.value === "") {
+        creditValMesg.textContent = "please enter creditcard number"; // adds styling to p element          ***for Name event***
+        creditCardNumber.before(creditValMesg);
+        changeElemDisplay(button, 'none');
     }
-
-
-    for (let index = 0; index < creditinputvalue.length; index++) {
-        if (isNaN(creditinputvalue[index])) {
-            creditinput.style.border = 'solid 2px red';
-            button.style.display = 'none';
-            creditWarning.textContent = "must be digits"; // adds styling to p element          ***for Name event***
-            creditinput.before(creditWarning);
+    for (let index = 0; index < creditCardNumbervalue.length; index++) {
+        if (isNaN(creditCardNumbervalue[index])) {
+            creditCardNumber.style.border = 'solid 2px red';
+            changeElemDisplay(button, 'none');
+            creditValMesg.textContent = "must be digits"; // adds styling to p element          ***for Name event***
+            creditCardNumber.before(creditValMesg);
         }
     }
 }
 
-creditinput.addEventListener('keyup', nocreditCard, false);
-creditinput.addEventListener('focusout', nocreditCard, false);
-creditinput.addEventListener('keyup', nocreditCard, false);
+creditCardNumber.addEventListener('keyup', nocreditCard, false);
+creditCardNumber.addEventListener('focusout', nocreditCard, false);
