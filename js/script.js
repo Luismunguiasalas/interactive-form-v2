@@ -17,6 +17,7 @@ const namecontainer = document.querySelector('.js-name'); // selects fieldset na
 const yourname = document.querySelector(".js-focus"); // selects name input        
 const youremail = document.querySelector('.js-email'); // selects email input      
 const button = document.querySelector('.js-submit'); // selects submit button      
+const formm = document.querySelector('form') // selects form element
 // create 'p' elements 
 const nameValMesg = document.createElement('p'); // create element                         ***for Name event***
 const emailValMesg = document.createElement('p'); // create element                        ***for email event***
@@ -39,7 +40,7 @@ validationStyling(activitiesValMesg);
 changeElemDisplay(jobTextInput, 'none'); // hides other job text input element           ***for other job input***
 changeElemDisplay(colorDivContainer, 'none'); // hides color drop down                   ***for color t-shirt***
 changeElemDisplay(activitiesParentContainer, 'none'); // hides activities checklist      ***for checklist***
-changeElemDisplay(button, 'none');          // hides button                              ***for submit button***
+// changeElemDisplay(button, 'none');          // hides button                              ***for submit button***
 changeElemDisplay(paypalForm, 'none');      // hides paypal info                         ***for paypal info***
 changeElemDisplay(bitcoinForm, 'none');     // hides bitcoin info                        ***for bitcoin info***
 // other assignments
@@ -176,7 +177,7 @@ for (let index = 0; index < activitiesInputChildren.length; index++) {
             findAttributeValueMatch(listOfSelectAttrValues, false);
             if (registeredActivities.length === 0) {
                 activitiesParentContainer.before(activitiesValMesg);
-                changeElemDisplay(button, 'none');
+                // changeElemDisplay(button, 'none');
             }
         }
     });
@@ -187,9 +188,9 @@ for (let index = 0; index < activitiesInputChildren.length; index++) {
 // verifies all conditions before displaying submit button
 function paymentValidationBlock() {
     if (namecontainer.children.length > 8) {
-        changeElemDisplay(button, 'none');
+        // changeElemDisplay(button, 'none');
     } else if (registeredActivities.length === 0) {
-        changeElemDisplay(button, 'none');
+        // changeElemDisplay(button, 'none');
     } else {
         changeElemDisplay(button, 'block');
     }
@@ -200,14 +201,14 @@ function displayAndHidePaymentInfo(e) {
         changeElemDisplay(paypalForm, 'block');
         changeElemDisplay(creditCardPaymentForm, 'none');
         changeElemDisplay(bitcoinForm, 'none');
-        paymentValidationBlock()
+        // paymentValidationBlock()
     }
     else if (e.target.value === 'bitcoin') {
         changeElemDisplay(bitcoinForm, 'block');
         changeElemDisplay(paypalForm, 'none');
         changeElemDisplay(creditCardPaymentForm, 'none');
         changeElemDisplay(button, 'block');
-        paymentValidationBlock();
+        // paymentValidationBlock();
     }
     else {
         changeElemDisplay(creditCardPaymentForm, 'block');
@@ -229,33 +230,33 @@ paymentDropdown.addEventListener('change', e => {
  ***/
 function creditCardValidationBlock(inputOne, inputTwo) {
     if (registeredActivities.length === 0) {
-        changeElemDisplay(button, 'none');
+        // changeElemDisplay(button, 'none');
     } else if (namecontainer.children.length > 8) {
-        changeElemDisplay(button, 'none');
+        // changeElemDisplay(button, 'none');
     } else if (inputOne.value === '' || inputTwo.value === '') {
-        changeElemDisplay(button, 'none');
+        // changeElemDisplay(button, 'none');
     } else {
         changeElemDisplay(button, 'block');
     }
 }
 function nameEmailActivitiesValidationBlock(valMesg) {
     valMesg.remove();
-    if (namecontainer.children.length > 8) {
-        changeElemDisplay(button, 'none');
-    } else if (registeredActivities.length === 0) {
-        changeElemDisplay(button, 'none');
-    } else if (creditCardNumber.value === '' || creditCardCVV.value === '' || zipCode.value === '') {
-        changeElemDisplay(button, 'none');
-    } else {
-        changeElemDisplay(button, 'block');
-    }
+    // if (namecontainer.children.length > 8) {
+    // changeElemDisplay(button, 'none');
+    // } else if (registeredActivities.length === 0) {
+    // changeElemDisplay(button, 'none');
+    // } else if (creditCardNumber.value === '' || creditCardCVV.value === '' || zipCode.value === '') {
+    // changeElemDisplay(button, 'none');
+    // } else {
+    //     changeElemDisplay(button, 'block');
+    // }
 }
 // validation condition for name section
 function noName() {  //for name
     if (yourname.value === "") {
         nameValMesg.textContent = "Must enter name"; // adds styling to p element          ***for Name event***
         yourname.before(nameValMesg);
-        changeElemDisplay(button, 'none')
+        // changeElemDisplay(button, 'none')
     }
 }
 // validation condition for name section
@@ -263,7 +264,7 @@ function removesOrAddsAlertWhileTypingName() {  // for name
     if (yourname.value === "") {
         nameValMesg.textContent = "Must enter name"; // adds styling to p element          ***for Name event***
         yourname.before(nameValMesg);
-        changeElemDisplay(button, 'none');
+        // changeElemDisplay(button, 'none');
         yourname.style.border = 'none'
     } else if (yourname.value.length > 0) {
         yourname.style.border = '3px solid lightgreen';
@@ -277,7 +278,7 @@ function removesOrAddsAlertWhileTypingEmail() {
         emailValMesg.textContent = "Please enter Email and format correctly";
         youremail.style.border = 'none';
         youremail.before(emailValMesg);
-        changeElemDisplay(button, 'none');
+        // changeElemDisplay(button, 'none');
     } else if (thestringemail.includes('@') && thestringemail.includes('.com')) {
         youremail.style.border = '3px solid lightgreen';
         nameEmailActivitiesValidationBlock(emailValMesg); // validation block for other sections
@@ -289,7 +290,7 @@ function verifyEmail() {
     if (thestringemail.indexOf('@') === -1 || thestringemail.indexOf('.com') === -1) {
         emailValMesg.textContent = "Please enter Email and format correctly";
         youremail.before(emailValMesg);
-        changeElemDisplay(button, 'none')
+        // changeElemDisplay(button, 'none')
     }
 }
 // validation conditions for creditcard section
@@ -298,11 +299,11 @@ function nocreditCard() {
     if (creditCardNumber.value === "") {
         creditValMesg.textContent = "please enter creditcard number";
         creditCardNumber.before(creditValMesg);
-        changeElemDisplay(button, 'none');
+        // changeElemDisplay(button, 'none');
     }
     for (let index = 0; index < creditCardNumbervalue.length; index++) {
         if (isNaN(creditCardNumbervalue[index])) {
-            changeElemDisplay(button, 'none');
+            // changeElemDisplay(button, 'none');
             creditValMesg.textContent = "must be digits";
             creditCardNumber.before(creditValMesg);
         }
@@ -315,13 +316,13 @@ creditCardCVV.addEventListener('keyup', e => {
         // CVV validation conditions
         if (isNaN(creditCardCVVvalue[index])) {
             creditCardCVV.style.border = 'solid 2px red';
-            changeElemDisplay(button, 'none');
+            // changeElemDisplay(button, 'none');
         } else if (creditCardCVVvalue.length > 3) {
             creditCardCVV.style.border = 'solid 2px red';
-            changeElemDisplay(button, 'none');
+            // changeElemDisplay(button, 'none');
         } else if (creditCardCVVvalue.length === 3) {
             creditCardCVV.style.border = '3px solid lightgreen';
-            creditCardValidationBlock(creditCardNumber, zipCode);
+            // creditCardValidationBlock(creditCardNumber, zipCode);
         }
     }
 })
@@ -332,13 +333,13 @@ zipCode.addEventListener('keyup', e => {
         // zipcode validation conditions
         if (isNaN(zipCodevalue[index])) {
             zipCode.style.border = 'solid 2px red';
-            changeElemDisplay(button, 'none');
+            // changeElemDisplay(button, 'none');
         } else if (zipCodevalue.length > 5 || zipCodevalue.length < 5) {
             zipCode.style.border = 'solid 2px red';
-            changeElemDisplay(button, 'none');
+            // changeElemDisplay(button, 'none');
         } else if (zipCodevalue.length === 5) {
             zipCode.style.border = '3px solid lightgreen';
-            creditCardValidationBlock(creditCardCVV, creditCardNumber);
+            // creditCardValidationBlock(creditCardCVV, creditCardNumber);
         }
     }
 });
@@ -350,18 +351,23 @@ creditCardNumber.addEventListener('keyup', e => {
         creditValMesg.textContent = "Please enter a number that is between 13 and 16 digits long.";
         creditCardNumber.before(creditValMesg);
         creditCardNumber.style.border = '2px solid red';
-        changeElemDisplay(button, 'none')
+        // changeElemDisplay(button, 'none')
     } else if (creditCardNumbervalue.length > 16) {
         creditValMesg.textContent = "must be within 13 - 16 digits";
         creditCardNumber.before(creditValMesg);
         creditCardNumber.style.border = '2px solid red';
-        changeElemDisplay(button, 'none')
+        // changeElemDisplay(button, 'none')
     } else {
         creditCardNumber.style.border = '3px solid lightgreen';
         creditValMesg.remove();
-        creditCardValidationBlock(creditCardCVV, zipCode);
+        // creditCardValidationBlock(creditCardCVV, zipCode);
     }
 });
+
+
+
+
+
 yourname.addEventListener('focusout', noName, false);
 yourname.addEventListener('keyup', removesOrAddsAlertWhileTypingName, false);
 youremail.addEventListener('keyup', removesOrAddsAlertWhileTypingEmail, false);
