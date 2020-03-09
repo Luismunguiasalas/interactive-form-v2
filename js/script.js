@@ -165,11 +165,11 @@ for (let index = 0; index < activitiesInputChildren.length; index++) {
         let listOfSelectAttrValues = getAttrValuesForActivitySelected(index); // get attribute values from activity selected and 
         // when select checklist element
         if (registeredActivities.indexOf(listOfSelectAttrValues[indxName]) === -1) { //if name of attribute was NOT in activities list run nested code
-            registeredActivities.splice(registeredActivities.indexOf('not registered'), 1);
             registeredActivities.push(listOfSelectAttrValues[indxName]); //add option name selected to activities list
             addToTotalPrice(listOfSelectAttrValues);
             findAttributeValueMatch(listOfSelectAttrValues, true);
             nameEmailActivitiesValidationBlock(activitiesValMesg); // validation block
+            // registeredActivities.splice(registeredActivities.indexOf('not registered'), 1);
         } else {
             // when deselect checklist element
             let indexOfNameMatch = registeredActivities.indexOf(listOfSelectAttrValues[indxName]);
@@ -372,15 +372,15 @@ function formsubmit() {
     console.log(namecontainer.children.length);
 
     for (let forms = 0; forms < 3; forms++) {
-        if (registeredActivities.length === 0) {
-            activitiesParentContainer.before(activitiesValMesg);
-            registeredActivities.push('not registered')
-        }
-        else if (creditCardNumber.value === '' || creditCardCVV.value === '' || zipCode.value === '') {
+        if (creditCardNumber.value === '' || creditCardCVV.value === '' || zipCode.value === '') {
             creditValMesg.textContent = "Verify creditcard, zipcode and cvv is formatted correctly";
             creditCardNumber.before(creditValMesg);
         }
-        else if (namecontainer.children.length === 8 && registeredActivities.indexOf('not registered') === -1) {
+        else if (registeredActivities.length === 0) {
+            activitiesParentContainer.before(activitiesValMesg);
+            // registeredActivities.push('not registered')
+        }
+        else if (namecontainer.children.length === 8) {
             nameValMesg.textContent = "Great! See you at the event."; // adds styling to p element          ***for Name event***
             nameValMesg.style.backgroundColor = 'lightgreen';
             nameValMesg.style.color = 'white';
