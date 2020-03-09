@@ -48,7 +48,7 @@ let totalPrice = 0; // total price of activities                                
 let registeredActivities = []; // keeps track of activities for 'register for activities section'    ***for checklist***
 totalPriceElement.textContent = 'Total: $0'; // add content into p element                           ***for checklist***
 activitiesParentContainer.append(totalPriceElement); // append p element into activities parent      ***for checklist***
-activitiesValMesg.textContent = "Must select atleast One"; // add text content             ***for checklist***
+activitiesValMesg.textContent = "Must register for one event"; // add text content             ***for checklist***
 paymentDropdown.removeChild(paymentDropdown.children[0]); //for payment dropdown           ***for payment***
 /** 
  * JOB ROLE SECTION
@@ -165,6 +165,7 @@ for (let index = 0; index < activitiesInputChildren.length; index++) {
         let listOfSelectAttrValues = getAttrValuesForActivitySelected(index); // get attribute values from activity selected and 
         // when select checklist element
         if (registeredActivities.indexOf(listOfSelectAttrValues[indxName]) === -1) { //if name of attribute was NOT in activities list run nested code
+            registeredActivities.splice(registeredActivities.indexOf('not registered'), 1);
             registeredActivities.push(listOfSelectAttrValues[indxName]); //add option name selected to activities list
             addToTotalPrice(listOfSelectAttrValues);
             findAttributeValueMatch(listOfSelectAttrValues, true);
@@ -365,7 +366,35 @@ creditCardNumber.addEventListener('keyup', e => {
 });
 
 
+function formsubmit() {
+    event.preventDefault();
+    console.log(registeredActivities.length);
+    console.log(namecontainer.children.length);
 
+    for (let forms = 0; forms < 3; forms++) {
+        if (registeredActivities.length === 0) {
+            activitiesParentContainer.before(activitiesValMesg);
+            registeredActivities.push('not registered')
+        }
+        else if (creditCardNumber.value === '' || creditCardCVV.value === '' || zipCode.value === '') {
+            creditValMesg.textContent = "Verify creditcard, zipcode and cvv is formatted correctly";
+            creditCardNumber.before(creditValMesg);
+        }
+        else if (namecontainer.children.length === 8 && registeredActivities.indexOf('not registered') === -1) {
+            nameValMesg.textContent = "Great! See you at the event."; // adds styling to p element          ***for Name event***
+            nameValMesg.style.backgroundColor = 'lightgreen';
+            nameValMesg.style.color = 'white';
+            nameValMesg.style.border = 'none';
+            creditValMesg.remove();
+            yourname.before(nameValMesg);
+            yourname.focus();
+        }
+    }
+}
+
+formm.addEventListener('submit', formsubmit, false);
+
+formm.addEventListener('submit', verifyEmail, false);
 
 
 yourname.addEventListener('focusout', noName, false);
