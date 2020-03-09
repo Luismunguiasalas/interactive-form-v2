@@ -368,9 +368,6 @@ creditCardNumber.addEventListener('keyup', e => {
 
 function formsubmit() {
     event.preventDefault();
-    console.log(registeredActivities.length);
-    console.log(namecontainer.children.length);
-
     for (let forms = 0; forms < 3; forms++) {
         if (creditCardNumber.value === '' || creditCardCVV.value === '' || zipCode.value === '') {
             creditValMesg.textContent = "Verify creditcard, zipcode and cvv is formatted correctly";
@@ -381,7 +378,7 @@ function formsubmit() {
             // registeredActivities.push('not registered')
         }
         else if (namecontainer.children.length === 8) {
-            nameValMesg.textContent = "Great! See you at the event."; // adds styling to p element          ***for Name event***
+            nameValMesg.textContent = "Great! See you at the event.";
             nameValMesg.style.backgroundColor = 'lightgreen';
             nameValMesg.style.color = 'white';
             nameValMesg.style.border = 'none';
