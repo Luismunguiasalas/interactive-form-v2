@@ -202,6 +202,8 @@ function displayAndHidePaymentInfo(e) {
         changeElemDisplay(paypalForm, 'block');
         changeElemDisplay(creditCardPaymentForm, 'none');
         changeElemDisplay(bitcoinForm, 'none');
+        // formm.addEventListener('submit', verifyEmail, false);
+        formm.addEventListener('submit', formsubmittwo, false);
         // paymentValidationBlock()
     }
     else if (e.target.value === 'bitcoin') {
@@ -209,13 +211,18 @@ function displayAndHidePaymentInfo(e) {
         changeElemDisplay(paypalForm, 'none');
         changeElemDisplay(creditCardPaymentForm, 'none');
         changeElemDisplay(button, 'block');
+        // formm.addEventListener('submit', verifyEmail, false);
+        formm.addEventListener('submit', formsubmittwo, false);
         // paymentValidationBlock();
     }
     else {
         changeElemDisplay(creditCardPaymentForm, 'block');
         changeElemDisplay(paypalForm, 'none');
         changeElemDisplay(bitcoinForm, 'none');
-        changeElemDisplay(button, 'none');
+        formm.addEventListener('submit', formsubmit, false);
+        // formm.addEventListener('submit', verifyEmail, false);
+        // formm.addEventListener('submit', noName, false);
+        // changeElemDisplay(button, 'none');
     }
 }
 /**
@@ -255,6 +262,9 @@ function nameEmailActivitiesValidationBlock(valMesg) {
 // validation condition for name section
 function noName() {  //for name
     if (yourname.value === "") {
+        nameValMesg.style.backgroundColor = '9BBEEF';
+        nameValMesg.style.border = 'solid 2px red';
+        nameValMesg.style.color = 'black';
         nameValMesg.textContent = "Must enter name"; // adds styling to p element          ***for Name event***
         yourname.before(nameValMesg);
         // changeElemDisplay(button, 'none')
@@ -263,6 +273,9 @@ function noName() {  //for name
 // validation condition for name section
 function removesOrAddsAlertWhileTypingName() {  // for name
     if (yourname.value === "") {
+        nameValMesg.style.backgroundColor = '9BBEEF';
+        nameValMesg.style.border = 'solid 2px red';
+        nameValMesg.style.color = 'black';
         nameValMesg.textContent = "Must enter name"; // adds styling to p element          ***for Name event***
         yourname.before(nameValMesg);
         // changeElemDisplay(button, 'none');
@@ -368,6 +381,7 @@ creditCardNumber.addEventListener('keyup', e => {
 
 function formsubmit() {
     event.preventDefault();
+    nameValMesg.remove();
     for (let forms = 0; forms < 3; forms++) {
         if (creditCardNumber.value === '' || creditCardCVV.value === '' || zipCode.value === '') {
             creditValMesg.textContent = "Verify creditcard, zipcode and cvv is formatted correctly";
@@ -389,14 +403,37 @@ function formsubmit() {
     }
 }
 
+function formsubmittwo() {
+    event.preventDefault();
+    for (let forms = 0; forms < 3; forms++) {
+        if (registeredActivities.length === 0) {
+            activitiesParentContainer.before(activitiesValMesg);
+            // registeredActivities.push('not registered')
+        }
+        else if (namecontainer.children.length === 8) {
+            nameValMesg.textContent = "Great! See you at the event.";
+            nameValMesg.style.backgroundColor = 'lightgreen';
+            nameValMesg.style.color = 'white';
+            nameValMesg.style.border = 'none';
+            creditValMesg.remove();
+            yourname.before(nameValMesg);
+            yourname.focus();
+        }
+    }
+}
+
+
+
 formm.addEventListener('submit', formsubmit, false);
 
 formm.addEventListener('submit', verifyEmail, false);
+formm.addEventListener('submit', noName, false);
 
 
 yourname.addEventListener('focusout', noName, false);
 yourname.addEventListener('keyup', removesOrAddsAlertWhileTypingName, false);
 youremail.addEventListener('keyup', removesOrAddsAlertWhileTypingEmail, false);
 youremail.addEventListener('focusout', verifyEmail, false);
+youremail.addEventListener('keyup', verifyEmail, false);
 creditCardNumber.addEventListener('keyup', nocreditCard, false);
 creditCardNumber.addEventListener('focusout', nocreditCard, false);
