@@ -219,7 +219,8 @@ function displayAndHidePaymentInfo(e) {
         changeElemDisplay(creditCardPaymentForm, 'block');
         changeElemDisplay(paypalForm, 'none');
         changeElemDisplay(bitcoinForm, 'none');
-        formm.addEventListener('submit', formsubmit, false);
+        // formm.removeEventListener('submit,', formsubmit, false);
+        formm.addEventListener('submit', formsubmitthree, false);
         // formm.addEventListener('submit', verifyEmail, false);
         // formm.addEventListener('submit', noName, false);
         // changeElemDisplay(button, 'none');
@@ -418,6 +419,30 @@ function formsubmittwo() {
             creditValMesg.remove();
             yourname.before(nameValMesg);
             yourname.focus();
+        }
+    }
+}
+
+function formsubmitthree() {
+    event.preventDefault();
+    nameValMesg.remove();
+    for (let forms = 0; forms < 2; forms++) {
+        if (creditCardNumber.value === '' || creditCardCVV.value === '' || zipCode.value === '') {
+            creditValMesg.textContent = "Verify creditcard, zipcode and cvv is formatted correctly";
+            creditCardNumber.before(creditValMesg);
+        }
+        else if (registeredActivities.length === 0) {
+            activitiesParentContainer.before(activitiesValMesg);
+            // registeredActivities.push('not registered')
+        }
+        else if (namecontainer.children.length === 8) {
+            nameValMesg.textContent = "Great! See you at the event.";
+            nameValMesg.style.backgroundColor = 'lightgreen';
+            nameValMesg.style.color = 'white';
+            nameValMesg.style.border = 'none';
+            creditValMesg.remove();
+            yourname.before(nameValMesg);
+            // yourname.focus();
         }
     }
 }
