@@ -39,11 +39,14 @@ validationStyling(activitiesValMesg);
 // elements to hide initially
 changeElemDisplay(jobTextInput, 'none'); // hides other job text input element           ***for other job input***
 changeElemDisplay(colorDivContainer, 'none'); // hides color drop down                   ***for color t-shirt***
-changeElemDisplay(activitiesParentContainer, 'none'); // hides activities checklist      ***for checklist***
+// changeElemDisplay(activitiesParentContainer, 'none'); // hides activities checklist      ***for checklist***
 // changeElemDisplay(button, 'none');          // hides button                              ***for submit button***
 changeElemDisplay(paypalForm, 'none');      // hides paypal info                         ***for paypal info***
 changeElemDisplay(bitcoinForm, 'none');     // hides bitcoin info                        ***for bitcoin info***
 // other assignments
+// console.log(activitiesInputChildren[0]);
+// activitiesInputChildren[0];
+// activitiesInputChildren[0].checked = true;
 let totalPrice = 0; // total price of activities                                          ***for checklist***
 let registeredActivities = []; // keeps track of activities for 'register for activities section'    ***for checklist***
 totalPriceElement.textContent = 'Total: $0'; // add content into p element                           ***for checklist***
@@ -97,11 +100,11 @@ function removeAndSetAttr(indexRem, indexSet) {
  */
 designDropdown.addEventListener('change', e => {
     changeElemDisplay(colorDivContainer, 'inline');
-    changeElemDisplay(activitiesParentContainer, 'block');
-    activitiesParentContainer.before(activitiesValMesg);
+    // changeElemDisplay(activitiesParentContainer, 'block');
+    // activitiesParentContainer.before(activitiesValMesg);
     if (designDropdown.value === "Select Theme") {
         changeElemDisplay(colorDivContainer, 'none');
-        changeElemDisplay(activitiesParentContainer, 'none');
+        // changeElemDisplay(activitiesParentContainer, 'none');
     } else if (designDropdown.value === "js puns") {
         removeAndSetAttr(3, 0);
         displayAllColorItems();
@@ -202,8 +205,11 @@ function displayAndHidePaymentInfo(e) {
         changeElemDisplay(paypalForm, 'block');
         changeElemDisplay(creditCardPaymentForm, 'none');
         changeElemDisplay(bitcoinForm, 'none');
+        // creditCardNumber.removeEventListener('keyup', creditcardValidation, false);
+        // creditCardNumber.removeEventListener('focusout', creditcardValidation, false);
+        // formm.removeEventListener('submit', creditcardValidation, false);
         // formm.addEventListener('submit', verifyEmail, false);
-        formm.addEventListener('submit', formsubmittwo, false);
+        // formm.addEventListener('submit', formsubmittwo, false);
         // paymentValidationBlock()
     }
     else if (e.target.value === 'bitcoin') {
@@ -211,16 +217,22 @@ function displayAndHidePaymentInfo(e) {
         changeElemDisplay(paypalForm, 'none');
         changeElemDisplay(creditCardPaymentForm, 'none');
         changeElemDisplay(button, 'block');
+        // creditCardNumber.addEventListener('keyup', creditcardValidation, false);
+        // creditCardNumber.addEventListener('focusout', creditcardValidation, false);
         // formm.addEventListener('submit', verifyEmail, false);
-        formm.addEventListener('submit', formsubmittwo, false);
+        // formm.addEventListener('submit', formsubmittwo, false);
         // paymentValidationBlock();
+        // formm.removeEventListener('submit', creditcardValidation, false);
     }
     else {
         changeElemDisplay(creditCardPaymentForm, 'block');
         changeElemDisplay(paypalForm, 'none');
         changeElemDisplay(bitcoinForm, 'none');
+        // formm.addEventListener('submit', creditcardValidation, false);
+        // creditCardNumber.addEventListener('keyup', creditcardValidation, false);
+        // creditCardNumber.addEventListener('focusout', creditcardValidation, false);
         // formm.removeEventListener('submit,', formsubmit, false);
-        formm.addEventListener('submit', formsubmitthree, false);
+        // formm.addEventListener('submit', formsubmitthree, false);
         // formm.addEventListener('submit', verifyEmail, false);
         // formm.addEventListener('submit', noName, false);
         // changeElemDisplay(button, 'none');
@@ -245,38 +257,38 @@ function creditCardValidationBlock(inputOne, inputTwo) {
     } else if (inputOne.value === '' || inputTwo.value === '') {
         // changeElemDisplay(button, 'none');
     } else {
-        changeElemDisplay(button, 'block');
+        // changeElemDisplay(button, 'block');
     }
 }
 function nameEmailActivitiesValidationBlock(valMesg) {
     valMesg.remove();
     // if (namecontainer.children.length > 8) {
-    // changeElemDisplay(button, 'none');
+    //     changeElemDisplay(button, 'none');
     // } else if (registeredActivities.length === 0) {
-    // changeElemDisplay(button, 'none');
+    //     changeElemDisplay(button, 'none');
     // } else if (creditCardNumber.value === '' || creditCardCVV.value === '' || zipCode.value === '') {
-    // changeElemDisplay(button, 'none');
+    //     changeElemDisplay(button, 'none');
     // } else {
     //     changeElemDisplay(button, 'block');
     // }
 }
-// validation condition for name section
-function noName() {  //for name
-    if (yourname.value === "") {
-        nameValMesg.style.backgroundColor = '9BBEEF';
-        nameValMesg.style.border = 'solid 2px red';
-        nameValMesg.style.color = 'black';
-        nameValMesg.textContent = "Must enter name"; // adds styling to p element          ***for Name event***
-        yourname.before(nameValMesg);
-        // changeElemDisplay(button, 'none')
-    }
-}
-// validation condition for name section
+//////////////////////////////////////////// validation condition for name section
+// function noName() {  //for name
+//     if (yourname.value === "") {
+//         // nameValMesg.style.backgroundColor = '9BBEEF';
+//         nameValMesg.style.border = 'solid 2px red';
+//         // nameValMesg.style.color = 'black';
+//         nameValMesg.textContent = "Must enter name"; // adds styling to p element          ***for Name event***
+//         yourname.before(nameValMesg);
+//         // changeElemDisplay(button, 'none')
+//     }
+// }
+//////////////////////////////////////////// validation condition for name section
 function removesOrAddsAlertWhileTypingName() {  // for name
     if (yourname.value === "") {
-        nameValMesg.style.backgroundColor = '9BBEEF';
+        // nameValMesg.style.backgroundColor = '9BBEEF';
         nameValMesg.style.border = 'solid 2px red';
-        nameValMesg.style.color = 'black';
+        // nameValMesg.style.color = 'black';
         nameValMesg.textContent = "Must enter name"; // adds styling to p element          ***for Name event***
         yourname.before(nameValMesg);
         // changeElemDisplay(button, 'none');
@@ -286,10 +298,16 @@ function removesOrAddsAlertWhileTypingName() {  // for name
         nameEmailActivitiesValidationBlock(nameValMesg); // validation block
     }
 }
-// validation conditions for email section
+//////////////////////////////////////////// validation conditions for email section
 function removesOrAddsAlertWhileTypingEmail() {
     let thestringemail = youremail.value;
-    if (thestringemail.indexOf('@') > thestringemail.indexOf('.com') || thestringemail.indexOf('.com') !== thestringemail.length - 4) {
+    if (thestringemail.indexOf('@') === -1 || thestringemail.indexOf('.com') === -1) {
+        emailValMesg.textContent = "Please enter Email and format correctly";
+        youremail.before(emailValMesg);
+        youremail.style.border = 'none'
+        // changeElemDisplay(button, 'none')
+    }
+    else if (thestringemail.indexOf('@') > thestringemail.indexOf('.com') || thestringemail.indexOf('.com') !== thestringemail.length - 4) {
         emailValMesg.textContent = "Please enter Email and format correctly";
         youremail.style.border = 'none';
         youremail.before(emailValMesg);
@@ -299,166 +317,377 @@ function removesOrAddsAlertWhileTypingEmail() {
         nameEmailActivitiesValidationBlock(emailValMesg); // validation block for other sections
     }
 }
-// validation conditions for email section
-function verifyEmail() {
-    let thestringemail = youremail.value;
-    if (thestringemail.indexOf('@') === -1 || thestringemail.indexOf('.com') === -1) {
-        emailValMesg.textContent = "Please enter Email and format correctly";
-        youremail.before(emailValMesg);
-        // changeElemDisplay(button, 'none')
-    }
-}
-// validation conditions for creditcard section
-function nocreditCard() {
+//////////////////////////////////////////// validation conditions for email section
+// function verifyEmail() {
+//     let thestringemail = youremail.value;
+//     if (thestringemail.indexOf('@') === -1 || thestringemail.indexOf('.com') === -1) {
+//         emailValMesg.textContent = "Please enter Email and format correctly";
+//         youremail.before(emailValMesg);
+//         // changeElemDisplay(button, 'none')
+//     }
+// }
+//////////////////////////////////////////// validation conditions for creditcard section
+function creditcardValidation() {
     let creditCardNumbervalue = creditCardNumber.value;
     if (creditCardNumber.value === "") {
-        creditValMesg.textContent = "please enter creditcard number";
-        creditCardNumber.before(creditValMesg);
+        creditValMesg.textContent = "please enter a creditcard number and validate zipcode and cvv";
+        creditCardNumber.style.border = 'solid 2px red';
+        creditCardPaymentForm.before(creditValMesg);
         // changeElemDisplay(button, 'none');
+    }
+    else if (creditCardNumbervalue.length < 13) {
+        creditValMesg.textContent = "Please enter a number that is between 13 and 16 digits long.";
+        creditCardPaymentForm.before(creditValMesg);
+        creditCardNumber.style.border = '2px solid red';
+        // changeElemDisplay(button, 'none')
+    }
+    else if (creditCardNumbervalue.length > 16) {
+        creditValMesg.textContent = "must be within 13 - 16 digits";
+        creditCardPaymentForm.before(creditValMesg);
+        creditCardNumber.style.border = '2px solid red';
+        // changeElemDisplay(button, 'none')
+    }
+    else {
+        creditCardNumber.style.border = '3px solid lightgreen';
+        creditValMesg.remove();
+        // creditCardValidationBlock(creditCardCVV, zipCode);
     }
     for (let index = 0; index < creditCardNumbervalue.length; index++) {
         if (isNaN(creditCardNumbervalue[index])) {
             // changeElemDisplay(button, 'none');
+            creditCardNumber.style.border = '2px solid red';
             creditValMesg.textContent = "must be digits";
-            creditCardNumber.before(creditValMesg);
+            creditCardPaymentForm.before(creditValMesg);
         }
     }
 }
-// creditcardCVV event listener
-creditCardCVV.addEventListener('keyup', e => {
-    let creditCardCVVvalue = creditCardCVV.value;
-    for (let index = 0; index < creditCardCVVvalue.length; index++) {
-        // CVV validation conditions
-        if (isNaN(creditCardCVVvalue[index])) {
-            creditCardCVV.style.border = 'solid 2px red';
-            // changeElemDisplay(button, 'none');
-        } else if (creditCardCVVvalue.length > 3) {
-            creditCardCVV.style.border = 'solid 2px red';
-            // changeElemDisplay(button, 'none');
-        } else if (creditCardCVVvalue.length === 3) {
-            creditCardCVV.style.border = '3px solid lightgreen';
-            // creditCardValidationBlock(creditCardNumber, zipCode);
-        }
-    }
-})
-// zipcode event listener
-zipCode.addEventListener('keyup', e => {
+
+//////////////////////////////////////////// validation conditions for zipcode
+function zipCodekeyup() {
     let zipCodevalue = zipCode.value;
+    if (zipCodevalue.length > 5 || zipCodevalue.length < 5) {
+        zipCode.style.border = 'solid 2px red';
+        // changeElemDisplay(button, 'none');
+    }
+    else if (zipCodevalue.length === 5) {
+        zipCode.style.border = '3px solid lightgreen';
+        // creditCardValidationBlock(creditCardCVV, creditCardNumber);
+    }
     for (let index = 0; index < zipCodevalue.length; index++) {
         // zipcode validation conditions
         if (isNaN(zipCodevalue[index])) {
             zipCode.style.border = 'solid 2px red';
             // changeElemDisplay(button, 'none');
-        } else if (zipCodevalue.length > 5 || zipCodevalue.length < 5) {
-            zipCode.style.border = 'solid 2px red';
+        }
+    }
+}
+
+
+//////////////////////////////////////////// validation conditions for cvv
+
+function creditCardCVVkeyup() {
+    let creditCardCVVvalue = creditCardCVV.value;
+    if (creditCardCVVvalue.length > 3 || creditCardCVVvalue.length < 3) {
+        creditCardCVV.style.border = 'solid 2px red';
+        // changeElemDisplay(button, 'none');
+    }
+    else if (creditCardCVVvalue.length === 3) {
+        creditCardCVV.style.border = '3px solid lightgreen';
+        // creditCardValidationBlock(creditCardNumber, zipCode);
+    }
+    for (let index = 0; index < creditCardCVVvalue.length; index++) {
+        // CVV validation conditions
+        if (isNaN(creditCardCVVvalue[index])) {
+            creditCardCVV.style.border = 'solid 2px red';
             // changeElemDisplay(button, 'none');
-        } else if (zipCodevalue.length === 5) {
-            zipCode.style.border = '3px solid lightgreen';
-            // creditCardValidationBlock(creditCardCVV, creditCardNumber);
-        }
-    }
-});
-// event listener for credit card
-creditCardNumber.addEventListener('keyup', e => {
-    let creditCardNumbervalue = creditCardNumber.value;
-    // credit card number validation conditions
-    if (creditCardNumbervalue.length < 13) {
-        creditValMesg.textContent = "Please enter a number that is between 13 and 16 digits long.";
-        creditCardNumber.before(creditValMesg);
-        creditCardNumber.style.border = '2px solid red';
-        // changeElemDisplay(button, 'none')
-    } else if (creditCardNumbervalue.length > 16) {
-        creditValMesg.textContent = "must be within 13 - 16 digits";
-        creditCardNumber.before(creditValMesg);
-        creditCardNumber.style.border = '2px solid red';
-        // changeElemDisplay(button, 'none')
-    } else {
-        creditCardNumber.style.border = '3px solid lightgreen';
-        creditValMesg.remove();
-        // creditCardValidationBlock(creditCardCVV, zipCode);
-    }
-});
-
-
-function formsubmit() {
-    event.preventDefault();
-    nameValMesg.remove();
-    for (let forms = 0; forms < 3; forms++) {
-        if (creditCardNumber.value === '' || creditCardCVV.value === '' || zipCode.value === '') {
-            creditValMesg.textContent = "Verify creditcard, zipcode and cvv is formatted correctly";
-            creditCardNumber.before(creditValMesg);
-        }
-        else if (registeredActivities.length === 0) {
-            activitiesParentContainer.before(activitiesValMesg);
-            // registeredActivities.push('not registered')
-        }
-        else if (namecontainer.children.length === 8) {
-            nameValMesg.textContent = "Great! See you at the event.";
-            nameValMesg.style.backgroundColor = 'lightgreen';
-            nameValMesg.style.color = 'white';
-            nameValMesg.style.border = 'none';
-            creditValMesg.remove();
-            yourname.before(nameValMesg);
-            yourname.focus();
         }
     }
 }
 
-function formsubmittwo() {
-    event.preventDefault();
-    for (let forms = 0; forms < 3; forms++) {
-        if (registeredActivities.length === 0) {
-            activitiesParentContainer.before(activitiesValMesg);
-            // registeredActivities.push('not registered')
-        }
-        else if (namecontainer.children.length === 8) {
-            nameValMesg.textContent = "Great! See you at the event.";
-            nameValMesg.style.backgroundColor = 'lightgreen';
-            nameValMesg.style.color = 'white';
-            nameValMesg.style.border = 'none';
-            creditValMesg.remove();
-            yourname.before(nameValMesg);
-            yourname.focus();
-        }
-    }
-}
+formm.addEventListener('submit', e => {
+    anotherFunction();
+}, false);
 
-function formsubmitthree() {
-    event.preventDefault();
-    nameValMesg.remove();
-    for (let forms = 0; forms < 2; forms++) {
-        if (creditCardNumber.value === '' || creditCardCVV.value === '' || zipCode.value === '') {
-            creditValMesg.textContent = "Verify creditcard, zipcode and cvv is formatted correctly";
-            creditCardNumber.before(creditValMesg);
-        }
-        else if (registeredActivities.length === 0) {
-            activitiesParentContainer.before(activitiesValMesg);
-            // registeredActivities.push('not registered')
-        }
-        else if (namecontainer.children.length === 8) {
-            nameValMesg.textContent = "Great! See you at the event.";
-            nameValMesg.style.backgroundColor = 'lightgreen';
-            nameValMesg.style.color = 'white';
-            nameValMesg.style.border = 'none';
-            creditValMesg.remove();
-            yourname.before(nameValMesg);
-            // yourname.focus();
-        }
-    }
-}
-
-
-
-formm.addEventListener('submit', formsubmit, false);
-
-formm.addEventListener('submit', verifyEmail, false);
-formm.addEventListener('submit', noName, false);
-
-
-yourname.addEventListener('focusout', noName, false);
+// yourname.addEventListener('focusout', noName, false);
 yourname.addEventListener('keyup', removesOrAddsAlertWhileTypingName, false);
+yourname.addEventListener('focusout', removesOrAddsAlertWhileTypingName, false);
+
+
 youremail.addEventListener('keyup', removesOrAddsAlertWhileTypingEmail, false);
-youremail.addEventListener('focusout', verifyEmail, false);
-youremail.addEventListener('keyup', verifyEmail, false);
-creditCardNumber.addEventListener('keyup', nocreditCard, false);
-creditCardNumber.addEventListener('focusout', nocreditCard, false);
+youremail.addEventListener('focusout', removesOrAddsAlertWhileTypingEmail, false);
+// youremail.addEventListener('focusout', verifyEmail, false);
+
+creditCardNumber.addEventListener('keyup', creditcardValidation, false);
+creditCardNumber.addEventListener('focusout', creditcardValidation, false);
+
+creditCardCVV.addEventListener('keyup', creditCardCVVkeyup, false);
+zipCode.addEventListener('keyup', zipCodekeyup, false);
+
+
+///////////////////////
+
+
+formm.addEventListener('submit', removesOrAddsAlertWhileTypingName, false);
+// formm.addEventListener('submit', removesOrAddsAlertWhileTypingName, false);
+
+formm.addEventListener('submit', removesOrAddsAlertWhileTypingEmail, false);
+// formm.addEventListener('submit', removesOrAddsAlertWhileTypingEmail, false);
+
+formm.addEventListener('submit', creditcardValidation, false);
+// formm.addEventListener('submit', creditcardValidation, false);
+
+formm.addEventListener('submit', creditCardCVVkeyup, false);
+formm.addEventListener('submit', zipCodekeyup, false);
+
+
+paymentDropdown.addEventListener('change', e => {
+    if (e.target.value === 'paypal') {
+        creditValMesg.remove();
+        // console.log('1');
+        formm.removeEventListener('submit', creditcardValidation, false);
+        // formm.addEventListener('submit', removesOrAddsAlertWhileTypingEmail, false);
+        // formm.removeEventListener('submit', creditcardValidation, false);
+
+        formm.removeEventListener('submit', creditCardCVVkeyup, false);
+        formm.removeEventListener('submit', zipCodekeyup, false);
+        formm.removeEventListener('submit', anotherFunction, false);
+        formm.addEventListener('submit', e => {
+            smallerFunction();
+        }, false)
+
+    }
+    else if (e.target.value === 'bitcoin') {
+
+        creditValMesg.remove();
+        // formm.addEventListener('submit', removesOrAddsAlertWhileTypingEmail, false);
+        formm.removeEventListener('submit', creditcardValidation, false);
+        // formm.removeEventListener('submit', creditcardValidation, false);
+
+        formm.removeEventListener('submit', creditCardCVVkeyup, false);
+        formm.removeEventListener('submit', zipCodekeyup, false);
+        formm.addEventListener('submit', e => {
+            smallerFunction();
+        }, false);
+        console.log('2');
+    }
+    else {
+        formm.addEventListener('submit', creditcardValidation, false);
+        // formm.addEventListener('submit', creditcardValidation, false);
+
+        formm.addEventListener('submit', creditCardCVVkeyup, false);
+        formm.addEventListener('submit', zipCodekeyup, false);
+        // formm.addEventListener('submit', e => {
+        //     anotherFunction();
+        // }, false);
+    }
+});
+
+function anotherFunction() {
+    let countercvv = 0;
+    let counterzip = 0;
+    let countercredit = 0;
+    console.log(countercvv);
+    console.log(counterzip);
+    console.log(countercredit);
+    event.preventDefault();
+    let creditCardCVVvalue = creditCardCVV.value;
+    let zipCodevalue = zipCode.value;
+    let thestringemail = youremail.value;
+    let creditCardNumbervalue = creditCardNumber.value;
+    var letters = /^[A-Za-z]+$/;
+    var numbers = /^[0-9]+$/;
+    for (let index = 0; index < creditCardCVVvalue.length; index++) {
+        // CVV validation conditions
+        if (isNaN(creditCardCVV.value[index])) {
+            // creditCardCVV.style.border = 'solid 2px red';
+            console.log('cvv -+ 1');
+            countercvv -= 1;
+            console.log(countercvv);
+            // changeElemDisplay(button, 'none');
+        }
+        else {
+            console.log('cvv + 1');
+            countercvv += 1;
+            console.log(countercvv);
+        }
+    }
+    for (let index = 0; index < zipCode.value.length; index++) {
+        // zipcode validation conditions
+        if (isNaN(zipCodevalue[index])) {
+            // zipCode.style.border = 'solid 2px red';
+            console.log('zipcode -+ 1');
+            counterzip -= 1;
+            // console.log(counterzip);
+            // changeElemDisplay(button, 'none');
+        }
+        else {
+            console.log('zip + 1');
+            counterzip += 1;
+            // console.log(counterzip);
+        }
+    }
+    for (let index = 0; index < creditCardNumber.value.length; index++) {
+        if (isNaN(creditCardNumbervalue[index])) {
+            // countercredit -= 1
+            // changeElemDisplay(button, 'none');
+            console.log('creditcard -+ 1');
+            countercredit -= 4;
+            // console.log(countercredit);
+            // creditCardNumber.style.border = '2px solid red';
+            // creditValMesg.textContent = "must be digits";
+            // creditCardPaymentForm.before(creditValMesg);
+        }
+        else {
+            console.log('credit + 1');
+            countercredit += 1;
+            // console.log(countercredit);
+        }
+    }
+    if (registeredActivities.length === 0) {
+        activitiesParentContainer.before(activitiesValMesg);
+        console.log('1');
+    }
+    ///////////////////////////////
+    else if (yourname.value === "") {
+        // nameValMesg.style.backgroundColor = '9BBEEF';
+        // nameValMesg.style.border = 'solid 2px red';
+        // // nameValMesg.style.color = 'black';
+        // nameValMesg.textContent = "Must enter name"; // adds styling to p element          ***for Name event***
+        // yourname.before(nameValMesg);
+        // // changeElemDisplay(button, 'none');
+        // yourname.style.border = 'none'
+        console.log('2');
+    }
+    // else if (yourname.value.length > 0) {
+    //     yourname.style.border = '3px solid lightgreen';
+    //     nameEmailActivitiesValidationBlock(nameValMesg); // validation block
+    //     console.log('3')
+    // }
+    else if (thestringemail.indexOf('@') === -1 || thestringemail.indexOf('.com') === -1) {
+        // emailValMesg.textContent = "Please enter Email and format correctly";
+        // youremail.before(emailValMesg);
+        // youremail.style.border = 'none'
+        // changeElemDisplay(button, 'none')
+        console.log('4');
+    }
+    else if (thestringemail.indexOf('@') > thestringemail.indexOf('.com') || thestringemail.indexOf('.com') !== thestringemail.length - 4) {
+        // emailValMesg.textContent = "Please enter Email and format correctly";
+        // youremail.style.border = 'none';
+        // youremail.before(emailValMesg);
+        console.log('5');
+        // changeElemDisplay(button, 'none');
+    }
+    // else if (thestringemail.includes('@') && thestringemail.includes('.com')) {
+    //     youremail.style.border = '3px solid lightgreen';
+    //     nameEmailActivitiesValidationBlock(emailValMesg); // validation block for other sections
+    //     console.log('6')
+    // }
+    else if (creditCardNumber.value === "") {
+        // creditValMesg.textContent = "please enter a creditcard number and validate zipcode and cvv";
+        // creditCardNumber.style.border = 'solid 2px red';
+        // creditCardPaymentForm.before(creditValMesg);
+        console.log('7');
+        // changeElemDisplay(button, 'none');
+    }
+    else if (creditCardNumbervalue.length < 13) {
+        // creditValMesg.textContent = "Please enter a number that is between 13 and 16 digits long.";
+        // creditCardPaymentForm.before(creditValMesg);
+        // creditCardNumber.style.border = '2px solid red';
+        console.log('8');
+        // changeElemDisplay(button, 'none')
+    }
+    else if (creditCardNumbervalue.match(letters)) {
+        console.log('leter');
+    }
+    else if (creditCardNumbervalue.length > 16) {
+        // creditValMesg.textContent = "must be within 13 - 16 digits";
+        // creditCardPaymentForm.before(creditValMesg);
+        // creditCardNumber.style.border = '2px solid red';
+        console.log('9');
+        // changeElemDisplay(button, 'none')
+    }
+    else if (zipCodevalue.length > 5 || zipCodevalue.length < 5) {
+        // zipCode.style.border = 'solid 2px red';
+        console.log('10');
+        // changeElemDisplay(button, 'none');
+    }
+    else if (zipCodevalue.length === 5 && zipCodevalue.match(letters)) {
+        // zipCode.style.border = '3px solid lightgreen';
+        console.log('11');
+        // creditCardValidationBlock(creditCardCVV, creditCardNumber);
+    }
+    else if (creditCardCVVvalue.length > 3 || creditCardCVVvalue.length < 3) {
+        // creditCardCVV.style.border = 'solid 2px red';
+        console.log('12');
+        // changeElemDisplay(button, 'none');
+    }
+    else if (creditCardCVVvalue.length === 3 && creditCardCVVvalue.match(letters)) {
+        // creditCardCVV.style.border = '3px solid lightgreen';
+        console.log('13');
+        // creditCardValidationBlock(creditCardNumber, zipCode);
+    }
+    else if (creditCardCVVvalue.match(letters)) {
+        console.log('contains letters');
+        console.log('14');
+    }
+    else if (zipCodevalue.match(letters)) {
+        console.log('contains letters');
+        console.log('15');
+    }
+    else if (creditCardNumbervalue.match(letters)) {
+        console.log('contains letters');
+        console.log('16');
+    }
+    ////////////////////////////////
+    else if (countercvv === 3 && counterzip === 5 && (countercredit >= 13 && countercredit <= 16)) {
+        formm.submit();
+    }
+}
+
+
+
+function smallerFunction() {
+    event.preventDefault();
+
+    let thestringemail = youremail.value;
+
+    if (registeredActivities.length === 0) {
+        // activitiesParentContainer.before(activitiesValMesg);
+        console.log('1');
+    }
+    ///////////////////////////////
+    else if (yourname.value === "") {
+        // nameValMesg.style.backgroundColor = '9BBEEF';
+        // nameValMesg.style.border = 'solid 2px red';
+        // // nameValMesg.style.color = 'black';
+        // nameValMesg.textContent = "Must enter name"; // adds styling to p element          ***for Name event***
+        // yourname.before(nameValMesg);
+        // // changeElemDisplay(button, 'none');
+        // yourname.style.border = 'none'
+        console.log('2');
+    }
+    // else if (yourname.value.length > 0) {
+    //     yourname.style.border = '3px solid lightgreen';
+    //     nameEmailActivitiesValidationBlock(nameValMesg); // validation block
+    //     console.log('3')
+    // }
+    else if (thestringemail.indexOf('@') === -1 || thestringemail.indexOf('.com') === -1) {
+        // emailValMesg.textContent = "Please enter Email and format correctly";
+        // youremail.before(emailValMesg);
+        // youremail.style.border = 'none'
+        // changeElemDisplay(button, 'none')
+        console.log('4');
+    }
+    else if (thestringemail.indexOf('@') > thestringemail.indexOf('.com') || thestringemail.indexOf('.com') !== thestringemail.length - 4) {
+        // emailValMesg.textContent = "Please enter Email and format correctly";
+        // youremail.style.border = 'none';
+        // youremail.before(emailValMesg);
+        console.log('5');
+        // changeElemDisplay(button, 'none');
+    }
+
+    ////////////////////////////////
+    else {
+        formm.submit();
+    }
+}
