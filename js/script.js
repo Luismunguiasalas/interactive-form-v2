@@ -410,7 +410,7 @@ formm.addEventListener('submit', e => {
 
 // yourname.addEventListener('focusout', noName, false);
 yourname.addEventListener('keyup', removesOrAddsAlertWhileTypingName, false);
-yourname.addEventListener('focusout', removesOrAddsAlertWhileTypingName, false);
+// yourname.addEventListener('focusout', removesOrAddsAlertWhileTypingName, false);
 
 
 youremail.addEventListener('keyup', removesOrAddsAlertWhileTypingEmail, false);
